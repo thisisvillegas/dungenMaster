@@ -4,16 +4,23 @@
 	"private": true,
 	"main": "index.js",
 	"dependencies": {
+		"@material-ui/core": "^4.9.7",
+		"@material-ui/icons": "^4.9.1",
+		"@material-ui/lab": "^4.0.0-alpha.46",
+		"@naisutech/react-tree": "^0.1.7",
 		"axios": "^0.19.2",
 		"bootstrap": "^4.4.1",
 		"cra-template": "1.0.2",
+		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-bootstrap": "^0.32.4",
 		"react-datepicker": "^2.14.0",
 		"react-dom": "^16.13.1",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.4.0",
-		"schema-utils": "^2.6.5"
+		"react-spring": "^8.0.27",
+		"schema-utils": "^2.6.5",
+		"typeface-roboto": "0.0.75"
 	},
 	"scripts": {
 		"start": "react-scripts start",

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Exercise = props => (
+const World = props => (
 	<tr>
-		<td>{props.exercise.username}</td>
-		<td>{props.exercise.description}</td>
-		<td>{props.exercise.duration}</td>
-		<td>{props.exercise.date.substring(0, 10)}</td>
+		<td>{props.world.username}</td>
+		<td>{props.world.description}</td>
+		<td>{props.world.duration}</td>
+		<td>{props.world.date.substring(0, 10)}</td>
 		<td>
-			<Link to={'/edit/' + props.exercise._id}>edit</Link> |{' '}
+			<Link to={'/edit/' + props.world._id}>edit</Link> |{' '}
 			<a
 				href="#"
 				onClick={() => {
@@ -22,42 +22,40 @@ const Exercise = props => (
 	</tr>
 );
 
-export default class ExercisesList extends Component {
+export default class WorldsList extends Component {
 	constructor(props) {
 		super(props);
 
-		this.deleteExercise = this.deleteExercise.bind(this);
+		this.deleteWorld = this.deleteWorld.bind(this);
 
-		this.state = { exercises: [] };
+		this.state = { worlds: [] };
 	}
 
 	componentDidMount() {
 		axios
 			.get('http://localhost:5050/exercises/')
 			.then(res => {
-				this.setState({ exercises: res.data });
+				this.setState({ worlds: res.data });
 			})
 			.catch(err => console.log(err));
 	}
 
-	deleteExercise(id) {
+	deleteWorld(id) {
 		axios.delete('http://localhost:5050/exercises/' + id).then(res => console.log(res.data));
 		this.setState({
-			exercises: this.state.exercises.filter(el => el._id !== id),
+			worlds: this.state.worlds.filter(el => el._id !== id),
 		});
 	}
 
-	exerciseList() {
-		return this.state.exercises.map(currentexercise => {
-			return (
-				<Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />
-			);
+	worldList() {
+		return this.state.worlds.map(currentworld => {
+			return <World world={currentworld} deleteWorld={this.deleteWorld} key={currentworld._id} />;
 		});
 	}
 	render() {
 		return (
 			<div>
-				<h3>Logged Exercise</h3>
+				<h3>Monsters Available</h3>
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
@@ -68,7 +66,7 @@ export default class ExercisesList extends Component {
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody>{this.exerciseList()}</tbody>
+					<tbody>{this.worldList()}</tbody>
 				</table>
 			</div>
 		);
