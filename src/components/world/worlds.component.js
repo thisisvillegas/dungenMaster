@@ -13,7 +13,7 @@ const World = props => (
 			<a
 				href="#"
 				onClick={() => {
-					props.deleteExercise(props.exercise._id);
+					props.deleteWorld(props.world._id);
 				}}
 			>
 				delete
