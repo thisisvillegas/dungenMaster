@@ -26,7 +26,6 @@ export default class FileExplorer extends Component {
 		return (
 			<StyledFileExplorer>
 				<TreeWrapper>
-					why so far
 					<Tree onSelect={this.onSelect} />
 				</TreeWrapper>
 				<div>{selectedFile && selectedFile.type === 'file' && selectedFile.content}</div>
