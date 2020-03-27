@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -9,6 +10,11 @@ import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { Link } from 'react-router-dom';
+import Child from './child.component';
+// import { getData } from './navBuilder';
+
+// const data2 = getData().then(res => console.log(res));
+// console.log('typeof data2', typeof data2);
 
 const data = {
 	id: '0',
@@ -79,6 +85,8 @@ const data = {
 		},
 	],
 };
+// console.log('typeof data', typeof data);
+// console.log(data);
 
 function MinusSquare(props) {
 	return (
@@ -154,11 +162,12 @@ export default function RecursiveTreeView() {
 	const renderTree = nodes => (
 		<StyledTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name} component={nodes.component}>
 			{Array.isArray(nodes.children)
-				? nodes.children.map(node => (
-						<Link to={`/${node.component}`} className="nav-link">
-							{renderTree(node)}
-						</Link>
-				  ))
+				? nodes.children.map(
+						node =>
+							// <Link to={`/${node.component}`} className="nav-link">
+							renderTree(node)
+						// </Link>
+				  )
 				: null}
 		</StyledTreeItem>
 	);
