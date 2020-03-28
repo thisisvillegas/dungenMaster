@@ -2,77 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import values from 'lodash/values';
 import PropTypes from 'prop-types';
-// import getData from '../navBuilder';
 
 import TreeNode from './TreeNode';
-
-const data = {
-	'/root': {
-		path: '/root',
-		type: 'folder',
-		isRoot: true,
-		children: ['/root/world', '/root/admin'],
-	},
-	'/root/world': {
-		path: '/root/world',
-		type: 'folder',
-		children: ['/root/world/campaign', '/root/world/readme.md'],
-	},
-	'/root/world/readme.md': {
-		path: '/root/world/readme.md',
-		type: 'file',
-		content:
-			'Thanks for reading me me. But there is nothing here, just little old me hanging around waiting for someone like you to read me, thanks for doing so.',
-	},
-	'/root/world/campaign': {
-		path: '/root/world/campaign',
-		type: 'folder',
-		children: ['/root/world/campaign/location'],
-	},
-	'/root/world/campaign/location': {
-		path: '/root/world/campaign/location',
-		type: 'folder',
-		children: ['/root/world/campaign/location/encounter'],
-	},
-	'/root/world/campaign/location/encounter': {
-		path: '/root/world/campaign/location/encounter',
-		type: 'folder',
-		children: [
-			'/root/world/campaign/location/encounter/encounter1',
-			'/root/world/campaign/location/encounter/encounter2',
-		],
-	},
-	'/root/world/campaign/location/encounter/encounter1': {
-		path: '/root/world/campaign/location/encounter/encounter1',
-		type: 'file',
-		content: 'this is encounter 1',
-	},
-	'/root/world/campaign/location/encounter/encounter2': {
-		path: '/root/world/campaign/location/encounter/encounter2',
-		type: 'file',
-		content: 'this is encounter 2',
-	},
-	'/root/admin': {
-		path: '/root/admin',
-		type: 'folder',
-		children: ['/root/admin/projects', '/root/admin/vblogs'],
-	},
-	'/root/admin/projects': {
-		path: '/root/admin/projects',
-		type: 'folder',
-		children: ['/root/admin/projects/treeview'],
-	},
-	'/root/admin/projects/treeview': {
-		path: '/root/admin/projects/treeview',
-		type: 'folder',
-		children: [],
-	},
-	'/root/admin/vblogs': {
-		path: '/root/admin/vblogs',
-		type: 'folder',
-		children: [],
-	},
-};
 
 let rooter = {
 	'/root': {
@@ -83,52 +14,50 @@ let rooter = {
 	},
 };
 
-async function getWorlds() {
-	axios
-		.get('http://localhost:5050/worlds/')
-		.then(res => {
-			console.log(res.data);
-			for (let index = 0; index < res.data.length; index++) {
-				Object.assign(rooter, res.data[index].node);
-				rooter['/root'].children.push(Object.keys(res.data[index].node));
-				console.log('rooter', rooter);
-			}
-			return res.data;
-		})
-
-		.catch(err => console.log(err));
-	// return worlds;
-}
-
-async function getCampaigns() {
-	axios
-		.get('http://localhost:5050/campaigns/')
-		.then(res => {
-			for (let index = 0; index < res.data.length; index++) {
-				Object.assign(rooter, res.data[index].node);
-
-				rooter[`/root/earth`].children.push(Object.keys(res.data[index].node));
-				console.log('rooter', rooter);
-			}
-		})
-
-		.catch(err => console.log(err));
-}
-
 async function getData() {
-	getWorlds().then(worlds => {
-		// console.log(typeof worlds);
-		getCampaigns();
-	});
+	function getWorlds() {
+		return axios.get('http://localhost:5050/worlds/');
+	}
 
-	// for (let index = 0; index < wld.data.length; index++) {
-	// 	Object.assign(rooter, wld.data[index].node);
-	// 	rooter['/root'].children.push(Object.keys(wld.data[index].node));
-	// 	console.log('rooter', rooter);
-	// }
-	// this.setState({
-	// 	nodes: rooter,
-	// });
+	function getCampaigns() {
+		return axios.get('http://localhost:5050/campaigns/');
+	}
+
+	function getLocations() {
+		return axios.get('http://localhost:5050/locations/');
+	}
+
+	function getEcounters() {
+		return axios.get('http://localhost:5050/encounters/');
+	}
+
+	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters()]).then(
+		axios.spread(function(worlds, campaigns, locations, encounters) {
+			for (let index = 0; index < worlds.data.length; index++) {
+				Object.assign(rooter, worlds.data[index].node);
+				rooter[`/root`].children.push(Object.keys(worlds.data[index].node));
+			}
+
+			for (let index = 0; index < campaigns.data.length; index++) {
+				Object.assign(rooter, campaigns.data[index].node);
+				rooter[`/root/${campaigns.data[index].world}`].children.push(Object.keys(campaigns.data[index].node));
+			}
+
+			for (let index = 0; index < locations.data.length; index++) {
+				Object.assign(rooter, locations.data[index].node);
+				rooter[`/root/${locations.data[index].world}/${locations.data[index].campaign}`].children.push(
+					Object.keys(locations.data[index].node)
+				);
+			}
+
+			for (let index = 0; index < encounters.data.length; index++) {
+				Object.assign(rooter, encounters.data[index].node);
+				rooter[
+					`/root/${encounters.data[index].world}/${encounters.data[index].campaign}/${encounters.data[index].location}`
+				].children.push(Object.keys(encounters.data[index].node));
+			}
+		})
+	);
 }
 
 export default class Tree extends Component {
