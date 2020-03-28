@@ -1,106 +1,29 @@
 const axios = require('axios');
 
-const data = {
-	id: '0',
-	name: 'Menu',
-	component: 'Splash',
-	children: [
-		{
-			id: '10',
-			name: 'Game Pieces',
-			component: 'Splash',
-			children: [
-				{
-					id: '1',
-					name: 'Worlds',
-					component: 'worlds',
-					children: [],
-				},
-				{
-					id: '2',
-					name: 'Campaigns',
-					component: 'campaigns',
-					children: [],
-				},
-				{
-					id: '3',
-					name: 'Locations',
-					component: 'Locations',
-					children: [],
-				},
-				{
-					id: '4',
-					name: 'Encounters',
-					component: 'Encounters',
-					children: [],
-				},
-			],
-		},
-		{
-			id: '110',
-			name: 'Admin',
-			component: 'Splash',
-			children: [
-				{
-					id: '10',
-					name: 'Users',
-					component: 'users',
-					children: [],
-				},
-				{
-					id: '20',
-					name: 'Monsters',
-					component: 'monsters',
-					children: [],
-				},
-				{
-					id: '30',
-					name: 'Items',
-					component: 'items',
-					children: [],
-				},
-				{
-					id: '40',
-					name: 'Map',
-					component: 'maps',
-					children: [],
-				},
-			],
-		},
-	],
+let rooter = {
+	'/root': {
+		path: '/root',
+		type: 'folder',
+		isRoot: true,
+		children: [],
+	},
 };
 
-let ob1 = {
-	name: 'andres',
-};
+async function getData() {
+	axios
+		.get('http://localhost:5050/worlds/')
+		.then(res => {
+			console.log('res.length', res.data.length);
+			for (let index = 0; index < res.data.length; index++) {
+				// console.log('resNode', res.data[index].node);
+				Object.assign(rooter, res.data[index].node);
+				let key = Object.keys(res.data[index].node);
+				rooter['/root'].children.push(key);
+				console.log('rooter', rooter);
+			}
 
-let ob2 = {
-	hobby: 'music',
-};
-
-ob1.append(ob2);
-
-console.log('ob1', ob1);
-
-// async function getData() {
-// 	return data;
-// 	// axios
-// 	// 	.get('http://localhost:5050/exercises/')
-// 	// 	.then(res => {
-// 	// 		// console.log('res.data', res.data);
-// 	// 		data.children[0].children[0].children = res.data;
-// 	// 		console.log(data.children[0].children[0].children);
-// 	// 		return data;
-// 	// 	})
-// 	// 	.catch(err => console.log(err));
-// }
-
-// let data1 = getData();
-
-// data.children[0].children[0].children = worldResData.map(currentWorld => {
-// 	return currentWorld.description;
-// });
-
-// console.log(data.children[0].children[0]);
-// main();
+			return rooter;
+		})
+		.catch(err => console.log(err));
+}
 module.exports.getData = getData;

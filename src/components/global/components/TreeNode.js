@@ -14,6 +14,7 @@ const StyledTreeNode = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin-left: 10%;
 	padding: 5px 8px;
 	padding-left: ${props => getPaddingLeft(props.level, props.type)}px;
 

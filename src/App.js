@@ -33,16 +33,17 @@ function App() {
 	return (
 		<Router>
 			<div>
-				<section class="blk-sect" id="i9icj">
-					<div class="row" id="ix3s">
-						<div id="nav" title="navspace" class="cell">
-							{/* <TreeNav /> */}
-							<Explorer />
-						</div>
-						{/* <div class="cell" id="i817">
-							<div className="container">
-								<br />
-								<Route path="/" exact component={Splash} />
+				<Explorer />
+				{/* <section class="blk-sect" id="i9icj"> */}
+				{/* <div class="row" id="ix3s"> */}
+				{/* <div id="nav" title="navspace" class="cell"> */}
+				{/* <TreeNav /> */}
+
+				{/* </div> */}
+				{/* <div class="cell" id="i817"> */}
+				{/* <div className="container"> */}
+				{/* <br /> */}
+				{/* <Route path="/" exact component={Splash} />
 								<Route path="/splash" exact component={Splash} />
 								<Route path="/edit/:id" exact component={EditExercise} />
 								<Route path="/create" exact component={CreateExercise} />
@@ -58,11 +59,11 @@ function App() {
 								<Route path="/users" exact component={Users} />
 								<Route path="/monsters" exact component={Monsters} />
 								<Route path="/items" exact component={Items} />
-								<Route path="/maps" exact component={Maps} />
-							</div>
-						</div> */}
-					</div>
-				</section>
+								<Route path="/maps" exact component={Maps} /> */}
+				{/* </div> */}
+				{/* </div> */}
+				{/* </div> */}
+				{/* </section> */}
 			</div>
 		</Router>
 	);

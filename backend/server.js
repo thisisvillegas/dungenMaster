@@ -21,10 +21,12 @@ app.use(express.json());
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
 const worldsRouter = require('./routes/worlds');
+const campaignsRouter = require('./routes/campaigns');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 app.use('/worlds', worldsRouter);
+app.use('/campaigns', campaignsRouter);
 
 app.listen(port, () => {
 	console.log(`Server is running on port; ${port}`);

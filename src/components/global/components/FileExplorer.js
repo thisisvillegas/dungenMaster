@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import Tree from './Tree';
 
 const StyledFileExplorer = styled.div`
-	width: 30%;
+	width: 100%;
 	max-width: 100%;
-	margin: 0 auto;
 	display: flex;
 `;
 
 const TreeWrapper = styled.div`
-	width: 250px;
+	width: 300px;
 `;
 
 export default class FileExplorer extends Component {

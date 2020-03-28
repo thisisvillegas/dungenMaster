@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import values from 'lodash/values';
 import PropTypes from 'prop-types';
+// import getData from '../navBuilder';
 
 import TreeNode from './TreeNode';
 
@@ -73,41 +74,70 @@ const data = {
 	},
 };
 
-// let rooter = {
-// 	'/root': {
-// 		path: '/root',
-// 		type: 'folder',
-// 		isRoot: true,
-// 		children: ['/root/world'],
-// 	},
-// 	'/root/world': {
-// 		path: '/root/world',
-// 		type: 'folder',
-// 		children: [],
-// 	},
-// };
+let rooter = {
+	'/root': {
+		path: '/root',
+		type: 'folder',
+		isRoot: true,
+		children: [],
+	},
+};
+
+async function getWorlds() {
+	axios
+		.get('http://localhost:5050/worlds/')
+		.then(res => {
+			console.log(res.data);
+			for (let index = 0; index < res.data.length; index++) {
+				Object.assign(rooter, res.data[index].node);
+				rooter['/root'].children.push(Object.keys(res.data[index].node));
+				console.log('rooter', rooter);
+			}
+			return res.data;
+		})
+
+		.catch(err => console.log(err));
+	// return worlds;
+}
+
+async function getCampaigns() {
+	axios
+		.get('http://localhost:5050/campaigns/')
+		.then(res => {
+			for (let index = 0; index < res.data.length; index++) {
+				Object.assign(rooter, res.data[index].node);
+
+				rooter[`/root/earth`].children.push(Object.keys(res.data[index].node));
+				console.log('rooter', rooter);
+			}
+		})
+
+		.catch(err => console.log(err));
+}
+
+async function getData() {
+	getWorlds().then(worlds => {
+		// console.log(typeof worlds);
+		getCampaigns();
+	});
+
+	// for (let index = 0; index < wld.data.length; index++) {
+	// 	Object.assign(rooter, wld.data[index].node);
+	// 	rooter['/root'].children.push(Object.keys(wld.data[index].node));
+	// 	console.log('rooter', rooter);
+	// }
+	// this.setState({
+	// 	nodes: rooter,
+	// });
+}
 
 export default class Tree extends Component {
-	state = data;
+	state = {
+		nodes: rooter,
+	};
 
 	componentDidMount() {
-		axios
-			.get('http://localhost:5050/worlds/')
-			.then(res => {
-				let resData = res.data;
-				console.log('resNode', res.data[1].node);
-				// resData.forEach(node => {});
-				// Object.assign(nodes, newData[1].node);
-				// Object.assign(rooter, resData[1].node);
-				// Object.assign(nodes, newData[1].node);
-				// Object.assign(nodes, newData[2]);
-				// Object.assign(nodes, newData[3]);
-				// console.log('nodes', rooter);
-				// this.setState({
-				// 	rooter,
-				// });
-			})
-			.catch(err => console.log(err));
+		getData();
 	}
 
 	getRootNodes = () => {
