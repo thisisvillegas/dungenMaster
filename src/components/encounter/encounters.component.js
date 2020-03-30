@@ -33,7 +33,7 @@ export default class WorldsList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5050/exercises/')
+			.get('http://localhost:5000/exercises/')
 			.then(res => {
 				this.setState({ worlds: res.data });
 			})
@@ -41,7 +41,7 @@ export default class WorldsList extends Component {
 	}
 
 	deleteWorld(id) {
-		axios.delete('http://localhost:5050/exercises/' + id).then(res => console.log(res.data));
+		axios.delete('http://localhost:5000/exercises/' + id).then(res => console.log(res.data));
 		this.setState({
 			worlds: this.state.worlds.filter(el => el._id !== id),
 		});

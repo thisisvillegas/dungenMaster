@@ -12,7 +12,7 @@ import 'typeface-roboto';
 
 // import TreeNav from './components/global/materialTree.component';
 
-// import Worlds from './components/world/worlds.component';
+import Worlds from './components/world/worlds.component';
 // import CreateWorld from './components/world/create-world.component';
 // import EditWorld from './components/world/edit-world.component';
 
@@ -47,10 +47,10 @@ function App() {
 								<Route path="/splash" exact component={Splash} />
 								<Route path="/edit/:id" exact component={EditExercise} />
 								<Route path="/create" exact component={CreateExercise} />
-								<Route path="/user" exact component={CreateUser} />
+								<Route path="/user" exact component={CreateUser} />*/}
 
-								<Route path="/worlds" exact component={Worlds} />
-								<Route path="/createworld" exact component={CreateWorld} />
+				{/* <Route path="/worlds" exact component={Worlds} /> */}
+				{/*<Route path="/createworld" exact component={CreateWorld} />
 								<Route path="/editworld/:id" exact component={EditWorld} />
 
 								<Route path="/campaigns" exact component={Campaigns} />

@@ -3,6 +3,9 @@ import { FaFile, FaFolder, FaFolderOpen, FaChevronDown, FaChevronRight } from 'r
 import styled from 'styled-components';
 import last from 'lodash/last';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import Worlds from '../../world/worlds.component';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const getPaddingLeft = (level, type) => {
 	let paddingLeft = level * 20;
@@ -29,25 +32,31 @@ const NodeIcon = styled.div`
 `;
 
 const getNodeLabel = node => last(node.path.split('/'));
+const getCategory = node => node.category;
 
 const TreeNode = props => {
 	const { node, getChildNodes, level, onToggle, onNodeSelect } = props;
-
 	return (
 		<React.Fragment>
 			<StyledTreeNode level={level} type={node.type}>
 				<NodeIcon onClick={() => onToggle(node)}>
 					{node.type === 'folder' && (node.isOpen ? <FaChevronDown /> : <FaChevronRight />)}
 				</NodeIcon>
-
 				<NodeIcon marginRight={10}>
 					{node.type === 'file' && <FaFile />}
 					{node.type === 'folder' && node.isOpen === true && <FaFolderOpen />}
 					{node.type === 'folder' && !node.isOpen && <FaFolder />}
 				</NodeIcon>
 
-				<span role="button" onClick={() => onNodeSelect(node)}>
-					{getNodeLabel(node)}
+				<span
+					role="button"
+					onClick={() => {
+						onNodeSelect(node);
+
+						console.log('node', node);
+					}}
+				>
+					<Link to={`/${getCategory(node)}`}>{getNodeLabel(node)}</Link>
 				</span>
 			</StyledTreeNode>
 
