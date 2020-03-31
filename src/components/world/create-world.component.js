@@ -3,21 +3,18 @@ import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default class CreateExercise extends Component {
+export default class CreateWorld extends Component {
 	constructor(props) {
 		super(props);
-		this.onChangeUsername = this.onChangeUsername.bind(this);
-		this.onChangeDescription = this.onChangeDescription.bind(this);
-		this.onChangeDuration = this.onChangeDuration.bind(this);
-		this.onChangeDate = this.onChangeDate.bind(this);
+		this.onChangeName = this.onChangeName.bind(this);
+		this.onChangeSize = this.onChangeSize.bind(this);
+		this.onChangeFactions = this.onChangeFactions.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 
 		this.state = {
-			username: '',
-			description: '',
-			duration: 0,
-			date: new Date(),
-			users: [],
+			name: '',
+			size: '',
+			factions: 0,
 		};
 	}
 
@@ -31,38 +28,32 @@ export default class CreateExercise extends Component {
 			}
 		});
 	}
-	onChangeUsername(e) {
+	onChangeName(e) {
 		this.setState({
-			username: e.target.value,
+			name: e.target.value,
 		});
 	}
-	onChangeDescription(e) {
+	onChangeSize(e) {
 		this.setState({
-			description: e.target.value,
+			size: e.target.value,
 		});
 	}
-	onChangeDuration(e) {
+	onChangeFactions(e) {
 		this.setState({
-			duration: e.target.value,
-		});
-	}
-	onChangeDate(date) {
-		this.setState({
-			date: date,
+			factions: e.target.value,
 		});
 	}
 	onSubmit(e) {
 		e.preventDefault();
-		const exercise = {
-			username: this.state.username,
-			description: this.state.description,
-			duration: this.state.duration,
-			date: this.state.date,
+		const world = {
+			name: this.state.name,
+			size: this.state.size,
+			factions: this.state.factions,
 		};
 
-		console.log(exercise);
+		console.log(world);
 
-		axios.post('http://localhost:5050/exercises/add', exercise).then(res => console.log(res.data));
+		axios.post('http://localhost:5000/worlds/add', world).then(res => console.log(res.data));
 
 		window.location = '/worlds';
 	}
@@ -72,48 +63,34 @@ export default class CreateExercise extends Component {
 				<h3>Create New World</h3>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
-						<label>Username: </label>
-						<select
-							ref="userInput"
-							required
-							className="form-control"
-							value={this.state.username}
-							onChange={this.onChangeUsername}
-						>
-							{this.state.users.map(user => {
-								return (
-									<option key={user} value={user}>
-										{user}
-									</option>
-								);
-							})}
-						</select>
-					</div>
-					<div className="form-group">
-						<label>Description: </label>
+						<label>Name: </label>
 						<input
 							type="text"
 							className="form-control"
-							value={this.state.description}
-							onChange={this.onChangeDescription}
+							value={this.state.name}
+							onChange={this.onChangeName}
 						/>
 					</div>
 					<div className="form-group">
-						<label>Duration: </label>
+						<label>Size: </label>
 						<input
 							type="text"
 							className="form-control"
-							value={this.state.duration}
-							onChange={this.onChangeDuration}
+							value={this.state.size}
+							onChange={this.onChangeSize}
 						/>
 					</div>
 					<div className="form-group">
-						<label>Date: </label>
-						<br />
-						<DatePicker selected={this.state.date} onChange={this.onChangeDate} />
+						<label>Factions: </label>
+						<input
+							type="number"
+							className="form-control"
+							value={this.state.factions}
+							onChange={this.onChangeFactions}
+						/>
 					</div>
 					<div className="form-group">
-						<input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+						<input type="submit" value="Create Worlds" className="btn btn-primary" />
 					</div>
 				</form>
 			</div>

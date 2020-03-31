@@ -4,10 +4,9 @@ import axios from 'axios';
 
 const World = props => (
 	<tr>
-		<td>{props.world.username}</td>
-		<td>{props.world.description}</td>
-		<td>{props.world.duration}</td>
-		<td>{props.world.date.substring(0, 10)}</td>
+		<td>{props.world.name}</td>
+		<td>{props.world.size}</td>
+		<td>{props.world.factions}</td>
 		<td>
 			<Link to={'/editworld/' + props.world._id}>edit</Link> |{' '}
 			<a
@@ -25,15 +24,13 @@ const World = props => (
 export default class WorldsList extends Component {
 	constructor(props) {
 		super(props);
-
 		this.deleteWorld = this.deleteWorld.bind(this);
-
 		this.state = { worlds: [] };
 	}
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5000/exercises/')
+			.get('http://localhost:5000/worlds/')
 			.then(res => {
 				this.setState({ worlds: res.data });
 			})
@@ -41,7 +38,7 @@ export default class WorldsList extends Component {
 	}
 
 	deleteWorld(id) {
-		axios.delete('http://localhost:5000/exercises/' + id).then(res => console.log(res.data));
+		axios.delete('http://localhost:5000/worlds/' + id).then(res => console.log(res.data));
 		this.setState({
 			worlds: this.state.worlds.filter(el => el._id !== id),
 		});
@@ -59,10 +56,9 @@ export default class WorldsList extends Component {
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
-							<th>Username</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Date</th>
+							<th>Name</th>
+							<th>Size</th>
+							<th>Factions</th>
 							<th>Action</th>
 						</tr>
 					</thead>

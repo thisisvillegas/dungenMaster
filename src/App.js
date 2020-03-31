@@ -27,43 +27,14 @@ import Worlds from './components/world/worlds.component';
 
 // import Splash from './components/splash.component';
 
-import Explorer from './components/global/components/App';
+// import Explorer from './components/global/components/App';
+import Explorer2 from './components/global/components/FileExplorer';
 
 function App() {
 	return (
 		<Router>
 			<div>
-				<Explorer />
-				{/* <section class="blk-sect" id="i9icj"> */}
-				{/* <div class="row" id="ix3s"> */}
-				{/* <div id="nav" title="navspace" class="cell"> */}
-				{/* <TreeNav /> */}
-
-				{/* </div> */}
-				{/* <div class="cell" id="i817"> */}
-				{/* <div className="container"> */}
-				{/* <br /> */}
-				{/* <Route path="/" exact component={Splash} />
-								<Route path="/splash" exact component={Splash} />
-								<Route path="/edit/:id" exact component={EditExercise} />
-								<Route path="/create" exact component={CreateExercise} />
-								<Route path="/user" exact component={CreateUser} />*/}
-
-				{/* <Route path="/worlds" exact component={Worlds} /> */}
-				{/*<Route path="/createworld" exact component={CreateWorld} />
-								<Route path="/editworld/:id" exact component={EditWorld} />
-
-								<Route path="/campaigns" exact component={Campaigns} />
-								<Route path="/locations" exact component={Locations} />
-								<Route path="/encounters" exact component={Encounters} />
-								<Route path="/users" exact component={Users} />
-								<Route path="/monsters" exact component={Monsters} />
-								<Route path="/items" exact component={Items} />
-								<Route path="/maps" exact component={Maps} /> */}
-				{/* </div> */}
-				{/* </div> */}
-				{/* </div> */}
-				{/* </section> */}
+				<Explorer2 />
 			</div>
 		</Router>
 	);

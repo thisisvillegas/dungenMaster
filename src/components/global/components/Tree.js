@@ -8,6 +8,7 @@ import TreeNode from './TreeNode';
 let rooter = {
 	'/root': {
 		path: '/root',
+		category: 'splash',
 		type: 'folder',
 		isRoot: true,
 		children: [],

@@ -8,9 +8,21 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-	console.log(req.body);
+	console.log('req.body.name', req.body.name);
+	let worldRoute = `/root/world/${req.body.name}`;
+
+	let nodePackage = {
+		[`${worldRoute}`]: {
+			path: `${worldRoute}`,
+			type: 'folder',
+			category: 'worlds',
+			children: [],
+		},
+	};
+
+	console.log('req.body', req.body);
 	const name = req.body.name;
-	const node = req.body.node;
+	const node = nodePackage;
 	const size = req.body.size;
 	const factions = Number(req.body.factions);
 
@@ -20,6 +32,8 @@ router.route('/add').post((req, res) => {
 		size,
 		factions,
 	});
+
+	console.log('newWorld', newWorld);
 
 	newWorld
 		.save()
