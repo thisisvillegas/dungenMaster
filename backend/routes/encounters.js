@@ -18,7 +18,6 @@ router.route('/add').post((req, res) => {
 			content: 'some stuff',
 		},
 	};
-	console.log(req.body);
 	const name = req.body.name;
 	const node = nodePackage;
 	const world = req.body.world;

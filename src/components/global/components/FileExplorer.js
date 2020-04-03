@@ -16,6 +16,9 @@ import CreateLocation from '../../location/create-location.component';
 import Encounters from '../../encounter/encounter.component';
 import CreateEncounter from '../../encounter/create-encounter.component';
 
+import Users from '../../user/user.component';
+import CreateUser from '../../user/create-user.component';
+
 import Splash from '../../splash.component';
 
 const StyledFileExplorer = styled.div`
@@ -59,8 +62,11 @@ export default class FileExplorer extends Component {
 					<Route path="/encounters" exact component={Encounters} />
 					<Route path="/createencounter" exact component={CreateEncounter} />
 
+					<Route path="/users" exact component={Users} />
+					<Route path="/createuser" exact component={CreateUser} />
+
 					<Route path="/" exact component={Splash} />
-					<Route path="/splash" exact component={CreateWorlds} />
+					<Route path="/splash" exact component={Splash} />
 				</div>
 			</StyledFileExplorer>
 		);

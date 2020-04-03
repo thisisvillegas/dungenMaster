@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import CreateWorld from '../components/world/create-world.component';
+import CreateUser from '../components/user/create-user.component';
 
 const World = props => (
 	<tr>
@@ -55,19 +57,16 @@ export default class WorldsList extends Component {
 	render() {
 		return (
 			<div>
-				<h3>This will be the Splash page showing maybe some rad data</h3>
-				{/* <table className="table">
-					<thead className="thead-light">
-						<tr>
-							<th>Username</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Date</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>{this.worldList()}</tbody>
-				</table> */}
+				<h1>Quick Links</h1>
+				<Link to={'/createworld'}>Create World</Link>
+				<br />
+				<Link to={'/createcampaign'}>Create Campaign</Link>
+				<br />
+				<Link to={'/createlocation'}>Create Location</Link>
+				<br />
+				<Link to={'/createencounter'}>Create Encounter</Link>
+				<br />
+				<Link to={'/createuser'}>Create User</Link>
 			</div>
 		);
 	}

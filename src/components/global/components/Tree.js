@@ -13,6 +13,25 @@ let rooter = {
 		isRoot: true,
 		children: [],
 	},
+	'/admin': {
+		path: '/admin',
+		category: 'splash',
+		type: 'folder',
+		isRoot: true,
+		children: ['/admin/users', '/admin/monsters'],
+	},
+	'/admin/users': {
+		path: '/admin/users',
+		category: 'users',
+		type: 'folder',
+		children: [],
+	},
+	'/admin/monsters': {
+		path: '/admin/monsters',
+		category: 'monsters',
+		type: 'folder',
+		children: [],
+	},
 };
 
 async function getData() {
@@ -41,10 +60,7 @@ async function getData() {
 			}
 
 			for (let index = 0; index < campaigns.data.length; index++) {
-				console.log('campaigns.data[index].node', campaigns.data[index].node);
 				Object.assign(rooter, campaigns.data[index].node);
-				console.log('rooter', rooter);
-				console.log('campaigns.data[index]', campaigns.data[index]);
 				rooter[`/root/${campaigns.data[index].world}`].children.push(Object.keys(campaigns.data[index].node));
 			}
 
