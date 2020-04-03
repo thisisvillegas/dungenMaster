@@ -30,7 +30,7 @@ export default class WorldsList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5000/worlds/')
+			.get('http://localhost:5001/worlds/')
 			.then(res => {
 				this.setState({ worlds: res.data });
 			})
@@ -38,7 +38,7 @@ export default class WorldsList extends Component {
 	}
 
 	deleteWorld(id) {
-		axios.delete('http://localhost:5000/worlds/' + id).then(res => console.log(res.data));
+		axios.delete('http://localhost:5001/worlds/' + id).then(res => console.log(res.data));
 		this.setState({
 			worlds: this.state.worlds.filter(el => el._id !== id),
 		});
@@ -53,6 +53,10 @@ export default class WorldsList extends Component {
 		return (
 			<div>
 				<h3>Worlds Available</h3>
+				<div>
+					<Link to="/createworld">Create New World </Link>| {'   '}
+					<Link to="/createcampaign">Create New Campaign</Link>
+				</div>
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
@@ -64,9 +68,6 @@ export default class WorldsList extends Component {
 					</thead>
 					<tbody>{this.worldList()}</tbody>
 				</table>
-				<div>
-					<Link to="/createworld">Create New</Link>
-				</div>
 			</div>
 		);
 	}

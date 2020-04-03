@@ -8,9 +8,19 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+	let encounterRoute = `/root/${req.body.world}/${req.body.campaign}/${req.body.location}/${req.body.name}`;
+
+	let nodePackage = {
+		[`${encounterRoute}`]: {
+			path: `${encounterRoute}`,
+			type: 'file',
+			category: 'encounters',
+			content: 'some stuff',
+		},
+	};
 	console.log(req.body);
 	const name = req.body.name;
-	const node = req.body.node;
+	const node = nodePackage;
 	const world = req.body.world;
 	const campaign = req.body.campaign;
 	const location = req.body.location;

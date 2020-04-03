@@ -3,27 +3,30 @@ import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default class CreateWorld extends Component {
+export default class CreateCampaign extends Component {
 	constructor(props) {
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
+		this.onChangeWorld = this.onChangeWorld.bind(this);
 		this.onChangeSize = this.onChangeSize.bind(this);
 		this.onChangeFactions = this.onChangeFactions.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 
 		this.state = {
 			name: '',
+			world: '',
+			worlds: [],
 			size: '',
 			factions: 0,
 		};
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/users/').then(res => {
+		axios.get('http://localhost:5001/worlds/').then(res => {
 			if (res.data.length > 0) {
 				this.setState({
-					users: res.data.map(user => user.username),
-					username: res.data[0].username,
+					worlds: res.data.map(world => world.name),
+					world: res.data[0].name,
 				});
 			}
 		});
@@ -31,6 +34,11 @@ export default class CreateWorld extends Component {
 	onChangeName(e) {
 		this.setState({
 			name: e.target.value,
+		});
+	}
+	onChangeWorld(e) {
+		this.setState({
+			world: e.target.value,
 		});
 	}
 	onChangeSize(e) {
@@ -45,22 +53,23 @@ export default class CreateWorld extends Component {
 	}
 	onSubmit(e) {
 		e.preventDefault();
-		const world = {
+		const campaign = {
 			name: this.state.name,
+			world: this.state.world,
 			size: this.state.size,
 			factions: this.state.factions,
 		};
 
-		console.log(world);
+		console.log(campaign);
 
-		axios.post('http://localhost:5001/worlds/add', world).then(res => console.log(res.data));
+		axios.post('http://localhost:5001/campaigns/add', campaign).then(res => console.log(res.data));
 
-		window.location = '/worlds';
+		window.location = '/campaigns';
 	}
 	render() {
 		return (
 			<div>
-				<h3>Create New World</h3>
+				<h3>Create New Campaign</h3>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label>Name: </label>
@@ -70,6 +79,24 @@ export default class CreateWorld extends Component {
 							value={this.state.name}
 							onChange={this.onChangeName}
 						/>
+					</div>
+					<div className="form-group">
+						<label>World: </label>
+						<select
+							ref="userInput"
+							required
+							className="form-control"
+							value={this.state.world}
+							onChange={this.onChangeWorld}
+						>
+							{this.state.worlds.map(world => {
+								return (
+									<option key={world} value={world}>
+										{world}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<div className="form-group">
 						<label>Size: </label>
@@ -90,7 +117,7 @@ export default class CreateWorld extends Component {
 						/>
 					</div>
 					<div className="form-group">
-						<input type="submit" value="Create Worlds" className="btn btn-primary" />
+						<input type="submit" value="Create Campaign" className="btn btn-primary" />
 					</div>
 				</form>
 			</div>

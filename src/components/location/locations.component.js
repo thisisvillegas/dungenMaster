@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const World = props => (
+const Location = props => (
 	<tr>
-		<td>{props.world.username}</td>
-		<td>{props.world.description}</td>
-		<td>{props.world.duration}</td>
-		<td>{props.world.date.substring(0, 10)}</td>
+		<td>{props.location.name}</td>
+		<td>{props.location.world}</td>
+		<td>{props.location.campaign}</td>
+		<td>{props.location.size}</td>
 		<td>
-			<Link to={'/edit/' + props.world._id}>edit</Link> |{' '}
+			<Link to={'/edit/' + props.location._id}>edit</Link> |{' '}
 			<a
 				href="#"
 				onClick={() => {
-					props.deleteExercise(props.exercise._id);
+					props.deleteLocation(props.location._id);
 				}}
 			>
 				delete
@@ -22,51 +22,55 @@ const World = props => (
 	</tr>
 );
 
-export default class WorldsList extends Component {
+export default class LocationsList extends Component {
 	constructor(props) {
 		super(props);
-
-		this.deleteWorld = this.deleteWorld.bind(this);
-
-		this.state = { worlds: [] };
+		this.deleteLocation = this.deleteLocation.bind(this);
+		this.state = { locations: [] };
 	}
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5050/exercises/')
+			.get('http://localhost:5001/locations/')
 			.then(res => {
-				this.setState({ worlds: res.data });
+				this.setState({ locations: res.data });
 			})
 			.catch(err => console.log(err));
 	}
 
-	deleteWorld(id) {
-		axios.delete('http://localhost:5050/exercises/' + id).then(res => console.log(res.data));
+	deleteLocation(id) {
+		axios.delete('http://localhost:5001/locations/' + id).then(res => console.log(res.data));
 		this.setState({
-			worlds: this.state.worlds.filter(el => el._id !== id),
+			locations: this.state.locations.filter(el => el._id !== id),
 		});
 	}
 
-	worldList() {
-		return this.state.worlds.map(currentworld => {
-			return <World world={currentworld} deleteWorld={this.deleteWorld} key={currentworld._id} />;
+	locationList() {
+		return this.state.locations.map(currentlocation => {
+			return (
+				<Location location={currentlocation} deleteLocation={this.deleteLocation} key={currentlocation._id} />
+			);
 		});
 	}
 	render() {
 		return (
 			<div>
 				<h3>Locations Available</h3>
+				<div>
+					<Link to="/createlocation">Create New Location </Link>| {'   '}
+					<Link to="/createencounter">Create New Encounter</Link>
+				</div>
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
-							<th>Username</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Date</th>
+							<th>Name</th>
+							<th>World</th>
+							<th>Campaign</th>
+							<th>Size</th>
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody>{this.worldList()}</tbody>
+					<tbody>{this.locationList()}</tbody>
 				</table>
 			</div>
 		);

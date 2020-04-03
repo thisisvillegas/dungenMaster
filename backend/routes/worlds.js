@@ -9,8 +9,8 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
 	console.log('req.body.name', req.body.name);
-	let worldRoute = `/root/world/${req.body.name}`;
-
+	let worldRoute = `/root/${req.body.name}`;
+	console.log('worldRoute', worldRoute);
 	let nodePackage = {
 		[`${worldRoute}`]: {
 			path: `${worldRoute}`,
@@ -33,7 +33,7 @@ router.route('/add').post((req, res) => {
 		factions,
 	});
 
-	console.log('newWorld', newWorld);
+	console.log('newWorldasdfsdf', newWorld);
 
 	newWorld
 		.save()

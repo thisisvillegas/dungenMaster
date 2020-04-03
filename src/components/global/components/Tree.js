@@ -17,19 +17,19 @@ let rooter = {
 
 async function getData() {
 	function getWorlds() {
-		return axios.get('http://localhost:5000/worlds/');
+		return axios.get('http://localhost:5001/worlds/');
 	}
 
 	function getCampaigns() {
-		return axios.get('http://localhost:5000/campaigns/');
+		return axios.get('http://localhost:5001/campaigns/');
 	}
 
 	function getLocations() {
-		return axios.get('http://localhost:5000/locations/');
+		return axios.get('http://localhost:5001/locations/');
 	}
 
 	function getEcounters() {
-		return axios.get('http://localhost:5000/encounters/');
+		return axios.get('http://localhost:5001/encounters/');
 	}
 
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters()]).then(
@@ -41,7 +41,10 @@ async function getData() {
 			}
 
 			for (let index = 0; index < campaigns.data.length; index++) {
+				console.log('campaigns.data[index].node', campaigns.data[index].node);
 				Object.assign(rooter, campaigns.data[index].node);
+				console.log('rooter', rooter);
+				console.log('campaigns.data[index]', campaigns.data[index]);
 				rooter[`/root/${campaigns.data[index].world}`].children.push(Object.keys(campaigns.data[index].node));
 			}
 

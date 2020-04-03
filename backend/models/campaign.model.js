@@ -16,6 +16,10 @@ const campaignSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		size: {
+			type: String,
+			required: true,
+		},
 		factions: {
 			type: Number,
 			required: true,

@@ -8,9 +8,21 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+	let worldRoute = `/root/${req.body.world}/${req.body.name}`;
+
+	let nodePackage = {
+		[`${worldRoute}`]: {
+			path: `${worldRoute}`,
+			type: 'folder',
+			category: 'campaigns',
+			children: [],
+		},
+	};
+
 	console.log(req.body);
 	const name = req.body.name;
-	const node = req.body.node;
+	const node = nodePackage;
+	const size = req.body.size;
 	const world = req.body.world;
 	const factions = Number(req.body.factions);
 
@@ -18,6 +30,7 @@ router.route('/add').post((req, res) => {
 		name,
 		node,
 		world,
+		size,
 		factions,
 	});
 
@@ -46,6 +59,7 @@ router.route('/update/:id').put((req, res) => {
 			Campaign.name = req.body.name;
 			Campaign.node = req.body.node;
 			Campaign.world = req.body.world;
+			Campaign.size = req.body.size;
 			Campaign.factions = Number(req.body.factions);
 
 			Campaign.save()

@@ -8,9 +8,20 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+	let locationRoute = `/root/${req.body.world}/${req.body.campaign}/${req.body.name}`;
+
+	let nodePackage = {
+		[`${locationRoute}`]: {
+			path: `${locationRoute}`,
+			type: 'folder',
+			category: 'locations',
+			children: [],
+		},
+	};
+
 	console.log(req.body);
 	const name = req.body.name;
-	const node = req.body.node;
+	const node = nodePackage;
 	const world = req.body.world;
 	const campaign = req.body.campaign;
 	const factions = Number(req.body.factions);
