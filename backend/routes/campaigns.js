@@ -1,65 +1,69 @@
 const router = require('express').Router();
-const World = require('../models/world.model');
+const Campaign = require('../models/campaign.model');
 
 router.route('/').get((req, res) => {
-	World.find()
-		.then(world => res.json(world))
+	Campaign.find()
+		.then(Campaign => res.json(Campaign))
 		.catch(err => res.status(400).json(err));
 });
 
 router.route('/add').post((req, res) => {
-	let worldRoute = `/root/${req.body.name}`;
+	let worldRoute = `/root/${req.body.world}/${req.body.name}`;
+
 	let nodePackage = {
 		[`${worldRoute}`]: {
 			path: `${worldRoute}`,
 			type: 'folder',
-			category: 'worlds',
+			category: 'campaigns',
 			children: [],
 		},
 	};
 
+	console.log(req.body);
 	const name = req.body.name;
 	const node = nodePackage;
 	const size = req.body.size;
+	const world = req.body.world;
 	const factions = Number(req.body.factions);
 
-	const newWorld = new World({
+	const newCampaign = new Campaign({
 		name,
 		node,
+		world,
 		size,
 		factions,
 	});
 
-	newWorld
+	newCampaign
 		.save()
-		.then(() => res.json('World was Added!'))
+		.then(() => res.json('Campaign was Added!'))
 		.catch(err => res.status(400).json(err));
 });
 
 router.route('/:id').get((req, res) => {
 	console.log(req.params);
-	World.findById(req.params.id)
-		.then(world => res.json(world))
+	Campaign.findById(req.params.id)
+		.then(Campaign => res.json(Campaign))
 		.catch(err => res.status(404).json(err));
 });
 
 router.route('/:id').delete((req, res) => {
-	World.findByIdAndDelete(req.params.id)
-		.then(world => res.json('World Deleted'))
+	Campaign.findByIdAndDelete(req.params.id)
+		.then(Campaign => res.json('Campaign Deleted'))
 		.catch(err => res.status(400).json(err));
 });
 
 router.route('/update/:id').put((req, res) => {
 	Exercise.findByIdAndUpdate(req.params.id)
-		.then(world => {
-			world.name = req.body.name;
-			world.node = req.body.node;
-			world.size = req.body.size;
-			world.factions = Number(req.body.factions);
+		.then(Campaign => {
+			Campaign.name = req.body.name;
+			Campaign.node = req.body.node;
+			Campaign.world = req.body.world;
+			Campaign.size = req.body.size;
+			Campaign.factions = Number(req.body.factions);
 
-			world
-				.save()
-				.then(() => res.json('World updated'))
+			Campaign.save()
+				.then(() => res.json('Campaign updated'))
 				.catch(err => res.status(400).json(err));
 		})
 		.catch(err => res.status(400).json(err));

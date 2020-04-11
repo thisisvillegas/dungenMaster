@@ -1,0 +1,20 @@
+#container {
+	text-align: justify;
+	-ms-text-justify: distribute-all-lines;
+	text-justify: distribute-all-lines;
+	width: 100%;
+}
+#container > div {
+	width: auto;
+	height: auto;
+	vertical-align: top;
+	display: inline-flex;
+	*display: inline;
+	zoom: 1;
+}
+span {
+	width: 100%;
+	display: inline-block;
+	font-size: 0;
+	line-height: 0;
+}

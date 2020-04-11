@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const World = props => (
+const Campaign = props => (
 	<tr>
-		<td>{props.world.username}</td>
-		<td>{props.world.description}</td>
-		<td>{props.world.duration}</td>
-		<td>{props.world.date.substring(0, 10)}</td>
+		<td>{props.campaign.name}</td>
+		<td>{props.campaign.size}</td>
+		<td>{props.campaign.factions}</td>
 		<td>
-			<Link to={'/edit/' + props.world._id}>edit</Link> |{' '}
+			<Link to={'/edit/' + props.campaign._id}>edit</Link> |{' '}
 			<a
 				href="#"
 				onClick={() => {
-					props.deleteExercise(props.exercise._id);
+					props.deleteCampaign(props.campaign._id);
 				}}
 			>
 				delete
@@ -22,40 +21,46 @@ const World = props => (
 	</tr>
 );
 
-export default class WorldsList extends Component {
+export default class CampaignsList extends Component {
 	constructor(props) {
 		super(props);
 
-		this.deleteWorld = this.deleteWorld.bind(this);
+		this.deleteCampaign = this.deleteCampaign.bind(this);
 
-		this.state = { worlds: [] };
+		this.state = { campaigns: [] };
 	}
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5050/exercises/')
+			.get('http://localhost:5001/campaigns/')
 			.then(res => {
-				this.setState({ worlds: res.data });
+				this.setState({ campaigns: res.data });
 			})
 			.catch(err => console.log(err));
 	}
 
-	deleteWorld(id) {
-		axios.delete('http://localhost:5050/exercises/' + id).then(res => console.log(res.data));
+	deleteCampaign(id) {
+		axios.delete('http://localhost:5001/campaigns/' + id).then(res => console.log(res.data));
 		this.setState({
-			worlds: this.state.worlds.filter(el => el._id !== id),
+			campaigns: this.state.campaigns.filter(el => el._id !== id),
 		});
 	}
 
 	worldList() {
-		return this.state.worlds.map(currentworld => {
-			return <World world={currentworld} deleteWorld={this.deleteWorld} key={currentworld._id} />;
+		return this.state.campaigns.map(currentcampaign => {
+			return (
+				<Campaign campaign={currentcampaign} deleteCampaign={this.deleteCampaign} key={currentcampaign._id} />
+			);
 		});
 	}
 	render() {
 		return (
 			<div>
 				<h3>Campaigns Available</h3>
+				<div>
+					<Link to="/createcampaign">Create New Campaign </Link>| {'   '}
+					<Link to="/createlocation">Create New Location</Link>
+				</div>
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
