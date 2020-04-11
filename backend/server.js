@@ -7,8 +7,8 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5001;
 
-// const uri = process.env.ATLAS_URI;
-const uri = 'mongodb://localhost:27017/test';
+const uri = process.env.ATLAS_URI;
+// const uri = 'mongodb://localhost:27017/test';
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;
