@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-	let userRoute = `/admin/${req.body.name}`;
+	let userRoute = `/admin/users/${req.body.username}`;
 
 	let nodePackage = {
 		[`${userRoute}`]: {

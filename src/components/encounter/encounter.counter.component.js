@@ -60,7 +60,6 @@ export default class EncountersList extends Component {
 	render() {
 		return (
 			<div>
-				<h3>Encounters Available</h3>
 				<table className="table">
 					<thead className="thead-light">
 						<tr>

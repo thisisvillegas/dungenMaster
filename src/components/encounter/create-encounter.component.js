@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CreateEncounter extends Component {
 	constructor(props) {
@@ -130,6 +129,9 @@ export default class CreateEncounter extends Component {
 							})}
 						</select>
 					</div>
+					{/* <Link to="/addWorld">
+						<button>+</button>
+					</Link> */}
 					<div className="form-group">
 						<label>Campaign: </label>
 						<select

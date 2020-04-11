@@ -14,20 +14,26 @@ const getPaddingLeft = (level, type) => {
 };
 
 const StyledTreeNode = styled.div`
+	a {
+		color: white;
+		font-size: 18px;
+	}
+	color: white;
+	background-color: black
+	font-size: 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin-left: 10%;
 	padding: 5px 8px;
-	padding-left: ${props => getPaddingLeft(props.level, props.type)}px;
+	padding-left: ${props => getPaddingLeft(props.level, props.type) + 30}px;
 
 	&:hover {
-		background: lightgray;
+		background: #770d0d;
 	}
 `;
 
 const NodeIcon = styled.div`
-	font-size: 12px;
+	font-size: 17px;
 	margin-right: ${props => (props.marginRight ? props.marginRight : 5)}px;
 `;
 
@@ -56,7 +62,9 @@ const TreeNode = props => {
 						console.log('node', node);
 					}}
 				>
+					{/* <StyledLink> */}
 					<Link to={`/${getCategory(node)}`}>{getNodeLabel(node)}</Link>
+					{/* </StyledLink> */}
 				</span>
 			</StyledTreeNode>
 

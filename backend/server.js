@@ -25,6 +25,7 @@ const worldsRouter = require('./routes/worlds');
 const campaignsRouter = require('./routes/campaigns');
 const locationsRouter = require('./routes/locations');
 const encountersRouter = require('./routes/encounters');
+const monstersRouter = require('./routes/monsters');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
@@ -32,6 +33,7 @@ app.use('/worlds', worldsRouter);
 app.use('/campaigns', campaignsRouter);
 app.use('/locations', locationsRouter);
 app.use('/encounters', encountersRouter);
+app.use('/monsters', monstersRouter);
 
 app.listen(port, () => {
 	console.log(`Server is running on port; ${port}`);

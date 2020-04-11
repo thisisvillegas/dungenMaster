@@ -51,8 +51,16 @@ async function getData() {
 		return axios.get('http://localhost:5001/encounters/');
 	}
 
-	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters()]).then(
-		axios.spread(function(worlds, campaigns, locations, encounters) {
+	function getMonsters() {
+		return axios.get('http://localhost:5001/monsters/');
+	}
+
+	function getUsers() {
+		return axios.get('http://localhost:5001/users/');
+	}
+
+	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(
+		axios.spread(function(worlds, campaigns, locations, encounters, monsters, users) {
 			for (let index = 0; index < worlds.data.length; index++) {
 				Object.assign(rooter, worlds.data[index].node);
 				rooter[`/root`].children.push(Object.keys(worlds.data[index].node));
@@ -77,7 +85,20 @@ async function getData() {
 					`/root/${encounters.data[index].world}/${encounters.data[index].campaign}/${encounters.data[index].location}`
 				].children.push(Object.keys(encounters.data[index].node));
 			}
-			// console.log('rooter', rooter);
+
+			for (let index = 0; index < monsters.data.length; index++) {
+				// console.log('monsters.data[index].node', monsters.data[index].node);
+				Object.assign(rooter, monsters.data[index].node);
+				rooter[`/admin/monsters`].children.push(Object.keys(monsters.data[index].node));
+			}
+
+			for (let index = 0; index < users.data.length; index++) {
+				// console.log('users.data[index].node', users.data[index]);
+				Object.assign(rooter, users.data[index].node);
+				rooter[`/admin/users`].children.push(Object.keys(users.data[index].node));
+			}
+
+			console.log('rooter', rooter);
 		})
 	);
 }
@@ -120,7 +141,7 @@ export default class Tree extends Component {
 				{rootNodes.map(node => (
 					<TreeNode
 						node={node}
-						key={node}
+						key={node.path}
 						getChildNodes={this.getChildNodes}
 						onToggle={this.onToggle}
 						onNodeSelect={this.onNodeSelect}
