@@ -36,27 +36,27 @@ let rooter = {
 
 async function getData() {
 	function getWorlds() {
-		return axios.get('http://localhost:5001/worlds/');
+		return axios.get('http://162.243.61.25:5001/worlds/');
 	}
 
 	function getCampaigns() {
-		return axios.get('http://localhost:5001/campaigns/');
+		return axios.get('http://162.243.61.25:5001/campaigns/');
 	}
 
 	function getLocations() {
-		return axios.get('http://localhost:5001/locations/');
+		return axios.get('http://162.243.61.25:5001/locations/');
 	}
 
 	function getEcounters() {
-		return axios.get('http://localhost:5001/encounters/');
+		return axios.get('http://162.243.61.25:5001/encounters/');
 	}
 
 	function getMonsters() {
-		return axios.get('http://localhost:5001/monsters/');
+		return axios.get('http://162.243.61.25:5001/monsters/');
 	}
 
 	function getUsers() {
-		return axios.get('http://localhost:5001/users/');
+		return axios.get('http://162.243.61.25:5001/users/');
 	}
 
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(

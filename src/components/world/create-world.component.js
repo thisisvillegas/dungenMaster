@@ -19,7 +19,7 @@ export default class CreateWorld extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/users/').then(res => {
+		axios.get('http://162.243.61.25:5000/users/').then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					users: res.data.map(user => user.username),
@@ -53,7 +53,7 @@ export default class CreateWorld extends Component {
 
 		console.log(world);
 
-		axios.post('http://localhost:5001/worlds/add', world).then(res => console.log(res.data));
+		axios.post('http://162.243.61.25:5001/worlds/add', world).then(res => console.log(res.data));
 
 		window.location = '/worlds';
 	}
