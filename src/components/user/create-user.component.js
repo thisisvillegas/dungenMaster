@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -53,9 +53,14 @@ export default class CreateUser extends Component {
 
 		console.log(user);
 
-		axios.post('http://localhost:5001/users/add', user).then(res => console.log(res.data));
-
-		window.location = '/users';
+		if (user.username !== '' && user.firstName !== '' && user.lastName !== '') {
+			axios.post('http://localhost:5001/users/add', user).then(res => console.log(res.data));
+			window.location = '/users';
+		} else {
+			console.log('shit broke');
+			alert('Please fill out all fields');
+			window.location = 'createuser';
+		}
 	}
 	render() {
 		return (

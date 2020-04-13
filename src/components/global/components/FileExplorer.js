@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Tree from './Tree';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+// eslint-disable-next-line
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from '../components/navbar.component';
 import Worlds from '../../world/worlds.component';
@@ -50,6 +51,7 @@ export default class FileExplorer extends Component {
 	onSelect = file => this.setState({ selectedFile: file });
 
 	render() {
+		// eslint-disable-next-line
 		const { selectedFile } = this.state;
 
 		return (

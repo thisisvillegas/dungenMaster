@@ -7,9 +7,9 @@ const Monster = props => (
 		<td>{props.monster.name}</td>
 		<td>{props.monster.world}</td>
 		<td>
-			<Link to={'/edit/' + props.monster._id}>edit</Link> |{' '}
+			<Link to={'/edit/' + props.monster._id}>edit</Link> |
 			<a
-				href="#"
+				href="/monsters"
 				onClick={() => {
 					props.deleteMonster(props.monster._id);
 				}}

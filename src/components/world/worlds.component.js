@@ -10,9 +10,9 @@ const World = props => (
 		<td>
 			<Link to={'/editworld/' + props.world._id}>edit</Link> |{' '}
 			<a
-				href="#"
+				href="/worlds"
 				onClick={() => {
-					props.deleteWorld(props.world._id);
+					props.deleteWorld(props.world._id, props.world.name);
 				}}
 			>
 				delete
@@ -25,7 +25,7 @@ export default class WorldsList extends Component {
 	constructor(props) {
 		super(props);
 		this.deleteWorld = this.deleteWorld.bind(this);
-		this.state = { worlds: [] };
+		this.state = { worlds: [], campaigns: [] };
 	}
 
 	componentDidMount() {
@@ -35,13 +35,26 @@ export default class WorldsList extends Component {
 				this.setState({ worlds: res.data });
 			})
 			.catch(err => console.log(err));
+		axios
+			.get('http://localhost:5001/campaigns/')
+			.then(res => {
+				this.setState({ campaigns: res.data });
+			})
+			.catch(err => console.log(err));
 	}
 
-	deleteWorld(id) {
-		axios.delete('http://localhost:5001/worlds/' + id).then(res => console.log(res.data));
-		this.setState({
-			worlds: this.state.worlds.filter(el => el._id !== id),
-		});
+	deleteWorld(id, name) {
+		// let filtered = this.state.campaigns.filter(campaign => campaign.world === name);
+		if (this.state.campaigns.filter(campaign => campaign.world === name).length < 1) {
+			console.log('true');
+			axios.delete('http://localhost:5001/worlds/' + id).then(res => console.log(res.data));
+			this.setState({
+				worlds: this.state.worlds.filter(el => el._id !== id),
+			});
+		} else {
+			console.log('false');
+			alert('Node has children, cant delete, will break things');
+		}
 	}
 
 	worldList() {

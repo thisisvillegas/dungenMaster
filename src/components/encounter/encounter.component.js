@@ -12,7 +12,7 @@ const Encounter = props => (
 		<td>
 			<Link to={'/edit/' + props.encounter._id}>edit</Link> |{' '}
 			<a
-				href="#"
+				href="/encounters"
 				onClick={() => {
 					props.deleteEncounter(props.encounter._id);
 				}}

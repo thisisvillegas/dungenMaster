@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -15,7 +15,7 @@ export default class CreateCampaign extends Component {
 		this.state = {
 			name: '',
 			world: '',
-			worlds: [],
+			worlds: [' '],
 			size: '',
 			factions: 0,
 		};
@@ -26,8 +26,8 @@ export default class CreateCampaign extends Component {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
-					world: res.data[0].name,
 				});
+				console.log('res.data', res.data);
 			}
 		});
 	}
@@ -62,9 +62,14 @@ export default class CreateCampaign extends Component {
 
 		console.log(campaign);
 
-		axios.post('http://localhost:5001/campaigns/add', campaign).then(res => console.log(res.data));
-
-		window.location = '/campaigns';
+		if (campaign.name !== '' && campaign.world !== '' && campaign.size !== '') {
+			axios.post('http://localhost:5001/campaigns/add', campaign).then(res => console.log(res.data));
+			window.location = '/campaigns';
+		} else {
+			console.log('shit broke');
+			alert('Please fill out all fields');
+			window.location = 'createcampaign';
+		}
 	}
 	render() {
 		return (
@@ -89,6 +94,7 @@ export default class CreateCampaign extends Component {
 							value={this.state.world}
 							onChange={this.onChangeWorld}
 						>
+							<option> -- </option>
 							{this.state.worlds.map(world => {
 								return (
 									<option key={world} value={world}>

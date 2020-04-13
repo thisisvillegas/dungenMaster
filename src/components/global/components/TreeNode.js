@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import last from 'lodash/last';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Worlds from '../../world/worlds.component';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import Worlds from '../../world/worlds.component';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const getPaddingLeft = (level, type) => {
 	let paddingLeft = level * 20;
@@ -16,11 +16,11 @@ const getPaddingLeft = (level, type) => {
 const StyledTreeNode = styled.div`
 	a {
 		color: white;
-		font-size: 18px;
+		font-size: 17px;
 	}
 	color: white;
 	background-color: black
-	font-size: 10px;
+	font-size: 9px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;

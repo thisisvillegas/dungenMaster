@@ -12,7 +12,7 @@ export default class Navbar extends Component {
 						<li className="nav-item dropdown">
 							<a
 								className="nav-link dropdown-toggle"
-								href="#"
+								href="/#"
 								id="navbarDropdown"
 								role="button"
 								data-toggle="dropdown"
@@ -31,9 +31,6 @@ export default class Navbar extends Component {
 								<a className="dropdown-item" id="createworld1" href="/createlocation">
 									Location
 								</a>
-								<a className="dropdown-item" id="createworld1" href="/createencounter">
-									Encounter
-								</a>
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item" id="createworld2" href="/createuser">
 									User
@@ -46,7 +43,7 @@ export default class Navbar extends Component {
 						<li className="nav-item dropdown">
 							<a
 								className="nav-link dropdown-toggle"
-								href="#"
+								href="/#"
 								id="navbarDropdown"
 								role="button"
 								data-toggle="dropdown"

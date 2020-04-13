@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -27,7 +27,7 @@ export default class CreateLocation extends Component {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
-					world: res.data[0].name,
+					// world: res.data[0].name,
 				});
 			}
 		});
@@ -38,7 +38,7 @@ export default class CreateLocation extends Component {
 					campaigns: res.data.map(campaign => {
 						return { name: campaign.name, world: campaign.world };
 					}),
-					campaign: res.data[0].name,
+					// campaign: res.data[0].name,
 				});
 			}
 		});
@@ -51,9 +51,12 @@ export default class CreateLocation extends Component {
 	onChangeWorld(e) {
 		this.setState({
 			world: e.target.value,
+			campaign: '',
 		});
+		console.log('OnChangeWorldState', this.state);
 	}
 	onChangeCampaign(e) {
+		console.log('e.target', e.target);
 		this.setState({
 			campaign: e.target.value,
 		});
@@ -72,12 +75,16 @@ export default class CreateLocation extends Component {
 			size: this.state.size,
 			factions: this.state.factions,
 		};
-
-		console.log(location);
-
-		axios.post('http://localhost:5001/locations/add', location).then(res => console.log(res.data));
-
-		window.location = '/locations';
+		// console.log('location', Object.values({ name, world, campaign }));
+		if (location.name !== '' && location.world !== '' && location.campaign !== '') {
+			console.log('Location', location);
+			axios.post('http://localhost:5001/locations/add', location).then(res => console.log(res.data));
+			window.location = '/locations';
+		} else {
+			console.log('shit broke');
+			alert('Please fill out all fields');
+			window.location = 'createlocation';
+		}
 	}
 	render() {
 		return (
@@ -102,6 +109,7 @@ export default class CreateLocation extends Component {
 							value={this.state.world}
 							onChange={this.onChangeWorld}
 						>
+							<option> -- </option>
 							{this.state.worlds.map(world => {
 								return (
 									<option key={world} value={world}>
@@ -120,11 +128,12 @@ export default class CreateLocation extends Component {
 							value={this.state.campaign}
 							onChange={this.onChangeCampaign}
 						>
+							<option> -- </option>
 							{this.state.campaigns
 								.filter(campaign => campaign.world === this.state.world)
 								.map(campaign => {
 									return (
-										<option key={campaign} value={campaign}>
+										<option key={campaign.name} value={campaign.name}>
 											{campaign.name}
 										</option>
 									);

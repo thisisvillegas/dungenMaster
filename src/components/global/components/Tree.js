@@ -36,27 +36,27 @@ let rooter = {
 
 async function getData() {
 	function getWorlds() {
-		return axios.get('http://162.243.61.25:5001/worlds/');
+		return axios.get('http://localhost:5001/worlds/');
 	}
 
 	function getCampaigns() {
-		return axios.get('http://162.243.61.25:5001/campaigns/');
+		return axios.get('http://localhost:5001/campaigns/');
 	}
 
 	function getLocations() {
-		return axios.get('http://162.243.61.25:5001/locations/');
+		return axios.get('http://localhost:5001/locations/');
 	}
 
 	function getEcounters() {
-		return axios.get('http://162.243.61.25:5001/encounters/');
+		return axios.get('http://localhost:5001/encounters/');
 	}
 
 	function getMonsters() {
-		return axios.get('http://162.243.61.25:5001/monsters/');
+		return axios.get('http://localhost:5001/monsters/');
 	}
 
 	function getUsers() {
-		return axios.get('http://162.243.61.25:5001/users/');
+		return axios.get('http://localhost:5001/users/');
 	}
 
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(
@@ -69,10 +69,12 @@ async function getData() {
 
 			for (let index = 0; index < campaigns.data.length; index++) {
 				Object.assign(rooter, campaigns.data[index].node);
+				// console.log('campaigns.data[index]', campaigns.data[index]);
 				rooter[`/root/${campaigns.data[index].world}`].children.push(Object.keys(campaigns.data[index].node));
 			}
 
 			for (let index = 0; index < locations.data.length; index++) {
+				// console.log('locations.data[index].campaign', locations.data[index].campaign);
 				Object.assign(rooter, locations.data[index].node);
 				rooter[`/root/${locations.data[index].world}/${locations.data[index].campaign}`].children.push(
 					Object.keys(locations.data[index].node)

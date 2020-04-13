@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import CreateWorld from '../components/world/create-world.component';
-import CreateUser from '../components/user/create-user.component';
+// import { Link } from 'react-router-dom';
+// import axios from 'axios';
+// import CreateWorld from '../components/world/create-world.component';
+// import CreateUser from '../components/user/create-user.component';
 
 export default class WorldsList extends Component {
 	constructor(props) {

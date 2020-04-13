@@ -11,9 +11,9 @@ const Location = props => (
 		<td>
 			<Link to={'/edit/' + props.location._id}>edit</Link> |{' '}
 			<a
-				href="#"
+				href="/locations"
 				onClick={() => {
-					props.deleteLocation(props.location._id);
+					props.deleteLocation(props.location._id, props.location.name);
 				}}
 			>
 				delete
@@ -26,7 +26,7 @@ export default class LocationsList extends Component {
 	constructor(props) {
 		super(props);
 		this.deleteLocation = this.deleteLocation.bind(this);
-		this.state = { locations: [] };
+		this.state = { locations: [], encounters: [] };
 	}
 
 	componentDidMount() {
@@ -36,13 +36,25 @@ export default class LocationsList extends Component {
 				this.setState({ locations: res.data });
 			})
 			.catch(err => console.log(err));
+		axios
+			.get('http://localhost:5001/encounters/')
+			.then(res => {
+				this.setState({ encounters: res.data });
+			})
+			.catch(err => console.log(err));
 	}
 
-	deleteLocation(id) {
-		axios.delete('http://localhost:5001/locations/' + id).then(res => console.log(res.data));
-		this.setState({
-			locations: this.state.locations.filter(el => el._id !== id),
-		});
+	deleteLocation(id, name) {
+		if (this.state.encounters.filter(encounter => encounter.location === name).length < 1) {
+			console.log('true');
+			axios.delete('http://localhost:5001/locations/' + id).then(res => console.log(res.data));
+			this.setState({
+				locations: this.state.locations.filter(el => el._id !== id),
+			});
+		} else {
+			console.log('false');
+			alert('Node has children, cant delete, will break things');
+		}
 	}
 
 	locationList() {

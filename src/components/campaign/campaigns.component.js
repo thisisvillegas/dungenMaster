@@ -5,14 +5,15 @@ import axios from 'axios';
 const Campaign = props => (
 	<tr>
 		<td>{props.campaign.name}</td>
+		<td>{props.campaign.world}</td>
 		<td>{props.campaign.size}</td>
 		<td>{props.campaign.factions}</td>
 		<td>
 			<Link to={'/edit/' + props.campaign._id}>edit</Link> |{' '}
 			<a
-				href="#"
+				href="/campaigns"
 				onClick={() => {
-					props.deleteCampaign(props.campaign._id);
+					props.deleteCampaign(props.campaign._id, props.campaign.name);
 				}}
 			>
 				delete
@@ -24,10 +25,8 @@ const Campaign = props => (
 export default class CampaignsList extends Component {
 	constructor(props) {
 		super(props);
-
 		this.deleteCampaign = this.deleteCampaign.bind(this);
-
-		this.state = { campaigns: [] };
+		this.state = { campaigns: [], locations: [] };
 	}
 
 	componentDidMount() {
@@ -37,13 +36,25 @@ export default class CampaignsList extends Component {
 				this.setState({ campaigns: res.data });
 			})
 			.catch(err => console.log(err));
+		axios
+			.get('http://localhost:5001/locations/')
+			.then(res => {
+				this.setState({ locations: res.data });
+			})
+			.catch(err => console.log(err));
 	}
 
-	deleteCampaign(id) {
-		axios.delete('http://localhost:5001/campaigns/' + id).then(res => console.log(res.data));
-		this.setState({
-			campaigns: this.state.campaigns.filter(el => el._id !== id),
-		});
+	deleteCampaign(id, name) {
+		if (this.state.locations.filter(location => location.campaign === name).length < 1) {
+			console.log('true');
+			axios.delete('http://localhost:5001/campaigns/' + id).then(res => console.log(res.data));
+			this.setState({
+				campaigns: this.state.campaigns.filter(el => el._id !== id),
+			});
+		} else {
+			console.log('false');
+			alert('Node has children, cant delete, will break things');
+		}
 	}
 
 	worldList() {
@@ -64,10 +75,10 @@ export default class CampaignsList extends Component {
 				<table className="table">
 					<thead className="thead-light">
 						<tr>
-							<th>Username</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Date</th>
+							<th>Name</th>
+							<th>World</th>
+							<th>Size</th>
+							<th>Factions</th>
 							<th>Action</th>
 						</tr>
 					</thead>

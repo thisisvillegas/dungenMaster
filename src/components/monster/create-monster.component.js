@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -22,7 +22,7 @@ export default class CreateExercise extends Component {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
-					world: res.data[0].name,
+					// world: res.data[0].name,
 				});
 			}
 		});
@@ -47,9 +47,14 @@ export default class CreateExercise extends Component {
 
 		console.log(monster);
 
-		axios.post('http://localhost:5001/monsters/add', monster).then(res => console.log(res.data));
-
-		window.location = '/monsters';
+		if (monster.name !== '' && monster.world !== '') {
+			axios.post('http://localhost:5001/monsters/add', monster).then(res => console.log(res.data));
+			window.location = '/monsters';
+		} else {
+			console.log('shit broke');
+			alert('Please fill out all fields');
+			window.location = 'createmonster';
+		}
 	}
 	render() {
 		return (
@@ -74,6 +79,7 @@ export default class CreateExercise extends Component {
 							value={this.state.world}
 							onChange={this.onChangeWorld}
 						>
+							<option> -- </option>
 							{this.state.worlds.map(world => {
 								return (
 									<option key={world} value={world}>

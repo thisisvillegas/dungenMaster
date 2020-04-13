@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -18,16 +18,16 @@ export default class CreateWorld extends Component {
 		};
 	}
 
-	componentDidMount() {
-		axios.get('http://162.243.61.25:5000/users/').then(res => {
-			if (res.data.length > 0) {
-				this.setState({
-					users: res.data.map(user => user.username),
-					username: res.data[0].username,
-				});
-			}
-		});
-	}
+	// componentDidMount() {
+	// 	axios.get('http://162.243.61.25:5000/users/').then(res => {
+	// 		if (res.data.length > 0) {
+	// 			this.setState({
+	// 				users: res.data.map(user => user.username),
+	// 				username: res.data[0].username,
+	// 			});
+	// 		}
+	// 	});
+	// }
 	onChangeName(e) {
 		this.setState({
 			name: e.target.value,
@@ -53,9 +53,14 @@ export default class CreateWorld extends Component {
 
 		console.log(world);
 
-		axios.post('http://162.243.61.25:5001/worlds/add', world).then(res => console.log(res.data));
-
-		window.location = '/worlds';
+		if (world.name !== '' && world.size !== '') {
+			axios.post('http://localhost:5001/worlds/add', world).then(res => console.log(res.data));
+			window.location = '/worlds';
+		} else {
+			console.log('shit broke');
+			alert('Please fill out all fields');
+			window.location = 'createworld';
+		}
 	}
 	render() {
 		return (
