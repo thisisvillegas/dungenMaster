@@ -22,7 +22,7 @@ export default class CreateCampaign extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5001/worlds/').then(res => {
+		axios.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/`).then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
@@ -63,7 +63,7 @@ export default class CreateCampaign extends Component {
 		console.log(campaign);
 
 		if (campaign.name !== '' && campaign.world !== '' && campaign.size !== '') {
-			axios.post('http://localhost:5001/campaigns/add', campaign).then(res => console.log(res.data));
+			axios.post(`${process.env.REACT_APP_LOCAL_DB}/campaigns/add`, campaign).then(res => console.log(res.data));
 			window.location = '/campaigns';
 		} else {
 			console.log('shit broke');

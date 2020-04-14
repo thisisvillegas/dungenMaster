@@ -36,27 +36,27 @@ let rooter = {
 
 async function getData() {
 	function getWorlds() {
-		return axios.get('http://localhost:5001/worlds/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/`);
 	}
 
 	function getCampaigns() {
-		return axios.get('http://localhost:5001/campaigns/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/campaigns/`);
 	}
 
 	function getLocations() {
-		return axios.get('http://localhost:5001/locations/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/locations/`);
 	}
 
 	function getEcounters() {
-		return axios.get('http://localhost:5001/encounters/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/encounters/`);
 	}
 
 	function getMonsters() {
-		return axios.get('http://localhost:5001/monsters/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/monsters/`);
 	}
 
 	function getUsers() {
-		return axios.get('http://localhost:5001/users/');
+		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/users/`);
 	}
 
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(

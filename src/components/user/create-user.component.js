@@ -54,7 +54,7 @@ export default class CreateUser extends Component {
 		console.log(user);
 
 		if (user.username !== '' && user.firstName !== '' && user.lastName !== '') {
-			axios.post('http://localhost:5001/users/add', user).then(res => console.log(res.data));
+			axios.post(`${process.env.REACT_APP_LOCAL_DB}/users/add`, user).then(res => console.log(res.data));
 			window.location = '/users';
 		} else {
 			console.log('shit broke');

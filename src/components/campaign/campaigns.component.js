@@ -31,13 +31,13 @@ export default class CampaignsList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5001/campaigns/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/campaigns/`)
 			.then(res => {
 				this.setState({ campaigns: res.data });
 			})
 			.catch(err => console.log(err));
 		axios
-			.get('http://localhost:5001/locations/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/locations/`)
 			.then(res => {
 				this.setState({ locations: res.data });
 			})
@@ -47,7 +47,7 @@ export default class CampaignsList extends Component {
 	deleteCampaign(id, name) {
 		if (this.state.locations.filter(location => location.campaign === name).length < 1) {
 			console.log('true');
-			axios.delete('http://localhost:5001/campaigns/' + id).then(res => console.log(res.data));
+			axios.delete(`${process.env.REACT_APP_LOCAL_DB}/campaigns/` + id).then(res => console.log(res.data));
 			this.setState({
 				campaigns: this.state.campaigns.filter(el => el._id !== id),
 			});

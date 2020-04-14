@@ -54,7 +54,7 @@ export default class CreateWorld extends Component {
 		console.log(world);
 
 		if (world.name !== '' && world.size !== '') {
-			axios.post('http://localhost:5001/worlds/add', world).then(res => console.log(res.data));
+			axios.post(`${process.env.REACT_APP_LOCAL_DB}/worlds/add`, world).then(res => console.log(res.data));
 			window.location = '/worlds';
 		} else {
 			console.log('shit broke');

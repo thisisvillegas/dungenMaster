@@ -29,7 +29,7 @@ export default class MonstersList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5001/monsters/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/monsters/`)
 			.then(res => {
 				console.log('res.data', res.data);
 				this.setState({ monsters: res.data });
@@ -38,7 +38,7 @@ export default class MonstersList extends Component {
 	}
 
 	deleteMonster(id) {
-		axios.delete('http://localhost:5001/monsters/' + id).then(res => console.log(res.data));
+		axios.delete(`${process.env.REACT_APP_LOCAL_DB}/monsters/` + id).then(res => console.log(res.data));
 		this.setState({
 			monsters: this.state.monsters.filter(el => el._id !== id),
 		});

@@ -30,13 +30,13 @@ export default class WorldsList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5001/worlds/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/`)
 			.then(res => {
 				this.setState({ worlds: res.data });
 			})
 			.catch(err => console.log(err));
 		axios
-			.get('http://localhost:5001/campaigns/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/campaigns/`)
 			.then(res => {
 				this.setState({ campaigns: res.data });
 			})
@@ -47,7 +47,7 @@ export default class WorldsList extends Component {
 		// let filtered = this.state.campaigns.filter(campaign => campaign.world === name);
 		if (this.state.campaigns.filter(campaign => campaign.world === name).length < 1) {
 			console.log('true');
-			axios.delete('http://localhost:5001/worlds/' + id).then(res => console.log(res.data));
+			axios.delete(`${process.env.REACT_APP_LOCAL_DB}/worlds/` + id).then(res => console.log(res.data));
 			this.setState({
 				worlds: this.state.worlds.filter(el => el._id !== id),
 			});

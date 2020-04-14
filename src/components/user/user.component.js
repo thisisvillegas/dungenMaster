@@ -30,7 +30,7 @@ export default class UsersList extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:5001/users/')
+			.get(`${process.env.REACT_APP_LOCAL_DB}/users/`)
 			.then(res => {
 				this.setState({ users: res.data });
 			})
@@ -38,7 +38,7 @@ export default class UsersList extends Component {
 	}
 
 	deleteUser(id) {
-		axios.delete('http://localhost:5001/users/' + id).then(res => console.log(res.data));
+		axios.delete(`${process.env.REACT_APP_LOCAL_DB}/users/` + id).then(res => console.log(res.data));
 		this.setState({
 			users: this.state.users.filter(el => el._id !== id),
 		});

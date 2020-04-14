@@ -18,7 +18,7 @@ export default class CreateExercise extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5001/worlds/').then(res => {
+		axios.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/`).then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
@@ -48,7 +48,7 @@ export default class CreateExercise extends Component {
 		console.log(monster);
 
 		if (monster.name !== '' && monster.world !== '') {
-			axios.post('http://localhost:5001/monsters/add', monster).then(res => console.log(res.data));
+			axios.post(`${process.env.REACT_APP_LOCAL_DB}/monsters/add`, monster).then(res => console.log(res.data));
 			window.location = '/monsters';
 		} else {
 			console.log('shit broke');
