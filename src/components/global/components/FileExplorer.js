@@ -11,6 +11,7 @@ import EditWorlds from '../../world/edit-world.component';
 
 import Campaigns from '../../campaign/campaigns.component';
 import CreateCampaign from '../../campaign/create-campaign.component';
+import EditCampaigns from '../../campaign/edit-campaign.component';
 
 import Locations from '../../location/locations.component';
 import CreateLocation from '../../location/create-location.component';
@@ -67,10 +68,11 @@ export default class FileExplorer extends Component {
 						{/* {selectedFile && selectedFile.type === 'file' && selectedFile.content} */}
 						<Route path="/worlds" exact component={Worlds} />
 						<Route path="/createworld" exact component={CreateWorlds} />
-						<Route path="/editworld" exact component={EditWorlds} />
+						<Route path="/editworld/:id" exact component={EditWorlds} />
 
 						<Route path="/campaigns" exact component={Campaigns} />
 						<Route path="/createcampaign" exact component={CreateCampaign} />
+						<Route path="/editcampaign/:id" exact component={EditCampaigns} />
 
 						<Route path="/locations" exact component={Locations} />
 						<Route path="/createlocation" exact component={CreateLocation} />

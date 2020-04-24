@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default class EditWorld extends Component {
+export default class EditCampaign extends Component {
 	constructor(props) {
 		super(props);
 		this.onChangeSize = this.onChangeSize.bind(this);
@@ -12,6 +12,7 @@ export default class EditWorld extends Component {
 
 		this.state = {
 			name: '',
+			world: '',
 			size: '',
 			factions: 0,
 		};
@@ -19,10 +20,11 @@ export default class EditWorld extends Component {
 
 	componentDidMount() {
 		axios
-			.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/` + this.props.match.params.id)
+			.get(`${process.env.REACT_APP_LOCAL_DB}/campaigns/` + this.props.match.params.id)
 			.then(res => {
 				this.setState({
 					name: res.data.name,
+					world: res.data.world,
 					size: res.data.size,
 					factions: res.data.factions,
 				});
@@ -50,28 +52,32 @@ export default class EditWorld extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		const world = {
+		const campaign = {
 			name: this.state.name,
+			world: this.state.world,
 			size: this.state.size,
 			factions: this.state.factions,
 		};
 
-		console.log(world);
-		console.log('this.props', this.props);
+		console.log(campaign);
 		axios
-			.put(`${process.env.REACT_APP_LOCAL_DB}/worlds/update/` + this.props.match.params.id, world)
+			.put(`${process.env.REACT_APP_LOCAL_DB}/campaigns/update/` + this.props.match.params.id, campaign)
 			.then(res => console.log(res.data));
 
-		window.location = '/worlds';
+		window.location = '/campaigns';
 	}
 	render() {
 		return (
 			<div>
-				<h3>Edit World</h3>
+				<h3>Edit Campaign</h3>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label>Name: </label>
 						<input type="text" className="form-control" value={this.state.name} contentEditable="false" />
+					</div>
+					<div className="form-group">
+						<label>World: </label>
+						<input type="text" className="form-control" value={this.state.world} contentEditable="false" />
 					</div>
 					<div className="form-group">
 						<label>Size: </label>
@@ -92,7 +98,7 @@ export default class EditWorld extends Component {
 						/>
 					</div>
 					<div className="form-group">
-						<input type="submit" value="Edit World" className="btn btn-primary" />
+						<input type="submit" value="Edit Campaign" className="btn btn-primary" />
 					</div>
 				</form>
 			</div>

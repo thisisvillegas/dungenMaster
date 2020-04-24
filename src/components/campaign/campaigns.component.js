@@ -9,7 +9,7 @@ const Campaign = props => (
 		<td>{props.campaign.size}</td>
 		<td>{props.campaign.factions}</td>
 		<td>
-			<Link to={'/edit/' + props.campaign._id}>edit</Link> |{' '}
+			<Link to={'/editcampaign/' + props.campaign._id}>edit</Link> |{' '}
 			<a
 				href="/campaigns"
 				onClick={() => {

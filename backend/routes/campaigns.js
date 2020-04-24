@@ -54,11 +54,8 @@ router.route('/:id').delete((req, res) => {
 });
 
 router.route('/update/:id').put((req, res) => {
-	Exercise.findByIdAndUpdate(req.params.id)
+	Campaign.findByIdAndUpdate(req.params.id)
 		.then(Campaign => {
-			Campaign.name = req.body.name;
-			Campaign.node = req.body.node;
-			Campaign.world = req.body.world;
 			Campaign.size = req.body.size;
 			Campaign.factions = Number(req.body.factions);
 

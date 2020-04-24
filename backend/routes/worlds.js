@@ -50,13 +50,10 @@ router.route('/:id').delete((req, res) => {
 });
 
 router.route('/update/:id').put((req, res) => {
-	Exercise.findByIdAndUpdate(req.params.id)
+	World.findByIdAndUpdate(req.params.id)
 		.then(world => {
-			world.name = req.body.name;
-			world.node = req.body.node;
 			world.size = req.body.size;
 			world.factions = Number(req.body.factions);
-
 			world
 				.save()
 				.then(() => res.json('World updated'))
