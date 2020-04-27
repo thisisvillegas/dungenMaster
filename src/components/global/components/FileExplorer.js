@@ -28,6 +28,8 @@ import Monsters from '../../monster/monster.component';
 import CreateMonster from '../../monster/create-monster.component';
 
 import Splash from '../../splash.component';
+import ObjView from '../../global/object.view.component';
+import ObjList from '../object.list.component';
 
 const StyledFileExplorer = styled.div`
 	width: 100%;
@@ -88,6 +90,9 @@ export default class FileExplorer extends Component {
 
 						<Route path="/" exact component={Splash} />
 						<Route path="/splash" exact component={Splash} />
+
+						<Route path="/view/:id" exact component={ObjView} />
+						<Route path="/list/:type" exact component={ObjList} />
 
 						<Route path="/encounterbuilder" exact component={EncounterBuilder} />
 					</div>

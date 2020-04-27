@@ -53,16 +53,16 @@ export default class Navbar extends Component {
 								Show
 							</a>
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a className="dropdown-item" id="createworld" href="/worlds">
+								<a className="dropdown-item" id="createworld" href="/list/worlds">
 									Worlds
 								</a>
-								<a className="dropdown-item" id="createworld1" href="/campaigns">
+								<a className="dropdown-item" id="createworld1" href="/list/campaigns">
 									Campaigns
 								</a>
-								<a className="dropdown-item" id="createworld1" href="/locations">
+								<a className="dropdown-item" id="createworld1" href="/list/locations">
 									Locations
 								</a>
-								<a className="dropdown-item" id="createworld1" href="/encounters">
+								<a className="dropdown-item" id="createworld1" href="/list/encounters">
 									Encounters
 								</a>
 								<div className="dropdown-divider"></div>

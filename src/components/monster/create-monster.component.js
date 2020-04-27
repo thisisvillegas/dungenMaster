@@ -14,6 +14,24 @@ export default class CreateExercise extends Component {
 			name: '',
 			world: '',
 			worlds: [],
+			alignment: '',
+			armorClass: 0,
+			hitPoints: 0,
+			speed: 0,
+			str: 0,
+			dex: 0,
+			con: 0,
+			int: 0,
+			wis: 0,
+			cha: 0,
+			savingThrows: 0,
+			damageImmunities: [],
+			conditionImmunities: [],
+			senses: [],
+			languages: [],
+			challenge: 0,
+			magicResistance: 0,
+			magicalW: 0,
 		};
 	}
 
@@ -22,7 +40,6 @@ export default class CreateExercise extends Component {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
-					// world: res.data[0].name,
 				});
 			}
 		});
