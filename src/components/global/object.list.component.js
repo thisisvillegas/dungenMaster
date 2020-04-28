@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
+import styled from 'styled-components';
 import axios from 'axios';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
 
-// const DeleteThings = props => (
-// 	<a
-// 		href="/worlds"
-// 		onClick={() => {
-// 			console.log('props', props);
-// 			props.deleteWorld(props.worlds._id, props.worlds.name);
-// 		}}
-// 	>
-// 		delete
-// 	</a>
-// );
+const StyledTable = styled.div`
+	background-color: black;
+	color: white;
+	th {
+		background-color: #545b62;
+	}
+`;
 
 async function loadData(type) {
 	let data = {
 		columns: [
+			{
+				label: 'View',
+				field: 'icon',
+				sort: 'asc',
+				width: 25,
+			},
 			{
 				label: 'Name',
 				field: 'name',
@@ -36,23 +40,16 @@ async function loadData(type) {
 				sort: 'asc',
 				width: 200,
 			},
-			// {
-			// 	label: 'Action',
-			// 	field: 'action',
-			// 	sort: 'asc',
-			// 	width: 100,
-			// },
 		],
 		rows: [],
 	};
-
-	console.log('type', type);
 
 	let worldArray = [],
 		campaignArray = [],
 		locationArray = [],
 		encounterArray = [],
-		listArray = [],
+		userArray = [],
+		monsterArray = [],
 		nugget = {};
 
 	async function getWorlds() {
@@ -71,141 +68,244 @@ async function loadData(type) {
 		return await axios.get(`${process.env.REACT_APP_LOCAL_DB}/encounters/`);
 	}
 
-	await axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters()]).then(
-		axios.spread(function(worlds, campaigns, locations, encounters) {
+	async function getUsers() {
+		return await axios.get(`${process.env.REACT_APP_LOCAL_DB}/users/`);
+	}
+
+	async function getMonsters() {
+		return await axios.get(`${process.env.REACT_APP_LOCAL_DB}/monsters/`);
+	}
+
+	function populateNugget(type, typeArray) {
+		// console.log('type that we are conditioning', type.data[0]);
+
+		for (let i = 0; i < type.data.length; i++) {
+			console.log('type.data[i]', type.data[i]);
+			if (type.data[i].type === 'users') {
+				typeArray.push(type.data[i]);
+				nugget = {
+					icon: (
+						<Link
+							to={{
+								pathname: '/view/' + type.data[i]._id,
+								state: { ...type.data[i] },
+							}}
+						>
+							<ZoomInIcon></ZoomInIcon>
+						</Link>
+					),
+					username: type.data[i].username,
+					firstName: type.data[i].firstName,
+					lastName: type.data[i].lastName,
+					characterClass: type.data[i].characterClass,
+					level: type.data[i].level,
+				};
+				data.rows.push(nugget);
+			} else if (type.data[i].type === 'monsters') {
+				typeArray.push(type.data[i]);
+				nugget = {
+					icon: (
+						<Link
+							to={{
+								pathname: '/view/' + type.data[i]._id,
+								state: { ...type.data[i] },
+							}}
+						>
+							<ZoomInIcon></ZoomInIcon>
+						</Link>
+					),
+					name: type.data[i].name,
+					characterClass: type.data[i].characterClass,
+					level: type.data[i].level,
+				};
+				data.rows.push(nugget);
+			} else {
+				// console.log('type.data[i]', type.data[i]);
+				typeArray.push(type.data[i]);
+				nugget = {
+					icon: (
+						<Link
+							to={{
+								pathname: '/view/' + type.data[i]._id,
+								state: { ...type.data[i] },
+							}}
+						>
+							<ZoomInIcon></ZoomInIcon>
+						</Link>
+					),
+					name: type.data[i].name,
+					type: type.data[i].type,
+					world: type.data[i].world,
+					size: type.data[i].size,
+					factions: type.data[i].factions,
+					campaign: type.data[i].campaign,
+					location: type.data[i].location,
+				};
+				data.rows.push(nugget);
+			}
+		}
+	}
+
+	await axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getUsers(), getMonsters()]).then(
+		axios.spread(function(worlds, campaigns, locations, encounters, users, monsters) {
 			switch (type.type) {
 				case 'worlds':
-					{
-						for (let i = 0; i < worlds.data.length; i++) {
-							// console.log('worlds.data', worlds.data[i]);
-							worldArray.push(worlds.data[i]);
-							nugget = {
-								name: <Link to={'/view/' + worlds.data[i]._id}>{worlds.data[i].name}</Link>,
-								size: worlds.data[i].size,
-								factions: worlds.data[i].factions,
-								// action: <DeleteThings />,
-							};
-							data.rows.push(nugget);
-							// console.log('nugget', nugget);
-						}
-					}
+					populateNugget(worlds, worldArray);
+
 					break;
 				case 'campaigns':
-					{
-						data.columns.push({
-							label: 'World',
-							field: 'world',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'World',
+						field: 'world',
+						sort: 'asc',
+						width: 100,
+					});
 
-						for (let i = 0; i < campaigns.data.length; i++) {
-							campaignArray.push(campaigns.data[i]);
+					populateNugget(campaigns, campaignArray);
 
-							nugget = {
-								name: <Link to={'/view/' + campaigns.data[i]._id}>{campaigns.data[i].name}</Link>,
-								world: campaigns.data[i].world,
-								size: campaigns.data[i].size,
-								factions: campaigns.data[i].factions,
-								// action: <DeleteThings />,
-							};
-							data.rows.push(nugget);
-							// console.log('nugget', nugget);
-						}
-					}
 					break;
 				case 'locations':
-					{
-						data.columns.push({
-							label: 'World',
-							field: 'world',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'World',
+						field: 'world',
+						sort: 'asc',
+						width: 100,
+					});
 
-						data.columns.push({
-							label: 'Campaign',
-							field: 'campaign',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'Campaign',
+						field: 'campaign',
+						sort: 'asc',
+						width: 100,
+					});
 
-						for (let i = 0; i < locations.data.length; i++) {
-							locationArray.push(locations.data[i]);
+					populateNugget(locations, locationArray);
 
-							nugget = {
-								name: <Link to={'/view/' + locations.data[i]._id}>{locations.data[i].name}</Link>,
-								world: locations.data[i].world,
-								size: locations.data[i].size,
-								factions: locations.data[i].factions,
-								campaign: locations.data[i].campaign,
-								// action: <DeleteThings />,
-							};
-							data.rows.push(nugget);
-							// console.log('nugget', nugget);
-						}
-					}
 					break;
 				case 'encounters':
-					{
-						data.columns.push({
-							label: 'World',
-							field: 'world',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'World',
+						field: 'world',
+						sort: 'asc',
+						width: 100,
+					});
 
-						data.columns.push({
-							label: 'Campaign',
-							field: 'campaign',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'Campaign',
+						field: 'campaign',
+						sort: 'asc',
+						width: 100,
+					});
 
-						data.columns.push({
-							label: 'Location',
-							field: 'location',
-							sort: 'asc',
-							width: 100,
-						});
+					data.columns.push({
+						label: 'Location',
+						field: 'location',
+						sort: 'asc',
+						width: 100,
+					});
 
-						for (let i = 0; i < encounters.data.length; i++) {
-							encounterArray.push(encounters.data[i]);
+					populateNugget(encounters, encounterArray);
 
-							nugget = {
-								name: <Link to={'/view/' + encounters.data[i]._id}>{encounters.data[i].name}</Link>,
-								world: encounters.data[i].world,
-								size: encounters.data[i].size,
-								factions: encounters.data[i].factions,
-								campaign: encounters.data[i].campaign,
-								location: encounters.data[i].location,
-								// action: <DeleteThings />,
-							};
-							data.rows.push(nugget);
-							// console.log('nugget', nugget);
-						}
-					}
 					break;
+				case 'users':
+					data.columns = [];
+					data.columns.push({
+						label: 'View',
+						field: 'icon',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Username',
+						field: 'username',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'First Name',
+						field: 'firstName',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Last Name',
+						field: 'lastName',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Level',
+						field: 'level',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Class',
+						field: 'characterClass',
+						sort: 'asc',
+						width: 100,
+					});
+					populateNugget(users, userArray);
+					break;
+				case 'monsters':
+					data.columns = [];
+					data.columns.push({
+						label: 'View',
+						field: 'icon',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Name',
+						field: 'name',
+						sort: 'asc',
+						width: 100,
+					});
+
+					data.columns.push({
+						label: 'Level',
+						field: 'level',
+						sort: 'asc',
+						width: 100,
+					});
+
+					data.columns.push({
+						label: 'Class',
+						field: 'characterClass',
+						sort: 'asc',
+						width: 100,
+					});
+
+					populateNugget(monsters, monsterArray);
+
+					break;
+				default:
+					console.log('you should never get this');
 			}
 		})
 	);
 
-	return { worldArray, data, campaignArray, locationArray, encounterArray };
+	return { worldArray, data, campaignArray, locationArray, encounterArray, userArray, monsterArray };
 }
 
 export default class WorldsList extends Component {
 	constructor(props) {
 		super(props);
-		// this.deleteWorld = this.deleteWorld.bind(this);
-		this.state = { worlds: [], campaigns: [], list: {}, locations: [], encounters: [], type: '' };
+		this.state = {
+			worlds: [],
+			campaigns: [],
+			list: {},
+			locations: [],
+			encounters: [],
+			type: '',
+			users: [],
+			monsters: [],
+		};
 	}
 
 	componentDidMount() {
 		loadData(this.props.match.params).then(res => {
-			console.log('this.props.match.params', this.props.match.params.type);
 			console.log('res', res);
-			console.log('res.worldArray', res.worldArray);
-			console.log('res.data', res.data);
 			this.setState({
 				worlds: res.worldArray,
 				list: res.data,
@@ -213,34 +313,27 @@ export default class WorldsList extends Component {
 				locations: res.locationArray,
 				encounters: res.encounterArray,
 				type: this.props.match.params.type,
+				users: res.userArray,
+				monsters: res.monsterArray,
 			});
 		});
 	}
 
-	// deleteWorld(id, name) {
-	// 	// let filtered = this.state.campaigns.filter(campaign => campaign.world === name);
-	// 	if (this.state.campaigns.filter(campaign => campaign.world === name).length < 1) {
-	// 		console.log('true');
-	// 		axios.delete(`${process.env.REACT_APP_LOCAL_DB}/worlds/` + id).then(res => console.log(res.data));
-	// 		this.setState({
-	// 			worlds: this.state.worlds.filter(el => el._id !== id),
-	// 		});
-	// 	} else {
-	// 		console.log('false');
-	// 		alert('Node has children, cant delete, will break things');
-	// 	}
-	// }
-
 	render() {
 		return (
 			<div>
-				{console.log('state in render', this.state)}
+				{console.log('this.state in olc render', this.state)}
 				<h3>{this.state.type}</h3>
-				{/* <div>
-					<Link to="/createworld">Create New World </Link>| {'   '}
-					<Link to="/createcampaign">Create New Campaign</Link>
-				</div> */}
-				<MDBDataTable striped hover data={this.state.list} />
+				<StyledTable>
+					<MDBDataTable
+						tbodyTextWhite={true}
+						theadTextWhite={true}
+						dark={true}
+						striped
+						hover
+						data={this.state.list}
+					/>
+				</StyledTable>
 			</div>
 		);
 	}

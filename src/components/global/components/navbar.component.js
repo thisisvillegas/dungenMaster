@@ -66,10 +66,10 @@ export default class Navbar extends Component {
 									Encounters
 								</a>
 								<div className="dropdown-divider"></div>
-								<a className="dropdown-item" id="createworld2" href="/users">
+								<a className="dropdown-item" id="createworld2" href="/list/users">
 									Users
 								</a>
-								<a className="dropdown-item" id="createworld2" href="/monsters">
+								<a className="dropdown-item" id="createworld2" href="/list/monsters">
 									Monsters
 								</a>
 							</div>

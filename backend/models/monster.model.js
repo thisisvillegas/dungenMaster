@@ -12,7 +12,15 @@ const monsterSchema = new Schema(
 			type: Object,
 			required: true,
 		},
-		world: {
+		characterClass: {
+			type: String,
+			required: true,
+		},
+		level: {
+			type: String,
+			required: true,
+		},
+		type: {
 			type: String,
 			required: true,
 		},

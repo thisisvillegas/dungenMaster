@@ -25,8 +25,16 @@ const userSchema = new Schema(
 			trim: true,
 			minlength: 3,
 		},
-		node: {
-			type: Object,
+		characterClass: {
+			type: String,
+			required: true,
+		},
+		level: {
+			type: String,
+			required: true,
+		},
+		type: {
+			type: String,
 			required: true,
 		},
 	},

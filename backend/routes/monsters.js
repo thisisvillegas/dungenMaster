@@ -20,12 +20,16 @@ router.route('/add').post((req, res) => {
 	};
 	const name = req.body.name;
 	const node = nodePackage;
-	const world = req.body.world;
+	const characterClass = req.body.characterClass;
+	const level = req.body.level;
+	const type = 'monsters';
 
 	const newMonster = new Monster({
 		name,
 		node,
-		world,
+		characterClass,
+		level,
+		type,
 	});
 
 	newMonster
@@ -52,7 +56,8 @@ router.route('/update/:id').put((req, res) => {
 		.then(monster => {
 			monster.name = req.body.name;
 			monster.node = req.body.node;
-			monster.world = req.body.world;
+			monster.characterClass = req.body.characterClass;
+			monster.level = req.body.level;
 
 			Monster.save()
 				.then(() => res.json('Monster updated'))

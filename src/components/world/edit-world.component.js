@@ -62,7 +62,7 @@ export default class EditWorld extends Component {
 			.put(`${process.env.REACT_APP_LOCAL_DB}/worlds/update/` + this.props.match.params.id, world)
 			.then(res => console.log(res.data));
 
-		window.location = '/worlds';
+		window.location = '/list/worlds';
 	}
 	render() {
 		return (

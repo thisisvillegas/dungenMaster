@@ -19,12 +19,14 @@ router.route('/add').post((req, res) => {
 	};
 
 	const name = req.body.name;
+	const type = 'worlds';
 	const node = nodePackage;
 	const size = req.body.size;
 	const factions = Number(req.body.factions);
 
 	const newWorld = new World({
 		name,
+		type,
 		node,
 		size,
 		factions,

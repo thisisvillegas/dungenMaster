@@ -13,6 +13,7 @@ export default class CreateWorld extends Component {
 
 		this.state = {
 			name: '',
+			type: 'worlds',
 			size: '',
 			factions: 0,
 		};
@@ -47,6 +48,7 @@ export default class CreateWorld extends Component {
 		e.preventDefault();
 		const world = {
 			name: this.state.name,
+			type: this.state.type,
 			size: this.state.size,
 			factions: this.state.factions,
 		};
@@ -55,7 +57,7 @@ export default class CreateWorld extends Component {
 
 		if (world.name !== '' && world.size !== '') {
 			axios.post(`${process.env.REACT_APP_LOCAL_DB}/worlds/add`, world).then(res => console.log(res.data));
-			window.location = '/worlds';
+			window.location = '/list/worlds';
 		} else {
 			console.log('shit broke');
 			alert('Please fill out all fields');

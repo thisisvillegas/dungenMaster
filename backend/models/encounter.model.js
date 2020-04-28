@@ -8,6 +8,10 @@ const encounterSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		type: {
+			type: String,
+			required: true,
+		},
 		node: {
 			type: Object,
 			required: true,

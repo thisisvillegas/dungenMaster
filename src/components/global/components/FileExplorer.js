@@ -5,18 +5,15 @@ import Tree from './Tree';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from '../components/navbar.component';
-import Worlds from '../../world/worlds.component';
+
 import CreateWorlds from '../../world/create-world.component';
 import EditWorlds from '../../world/edit-world.component';
 
-import Campaigns from '../../campaign/campaigns.component';
 import CreateCampaign from '../../campaign/create-campaign.component';
 import EditCampaigns from '../../campaign/edit-campaign.component';
 
-import Locations from '../../location/locations.component';
 import CreateLocation from '../../location/create-location.component';
 
-import Encounters from '../../encounter/encounter.component';
 import CreateEncounter from '../../encounter/create-encounter.component';
 
 import EncounterBuilder from '../../encounter/encounter.builder.component';
@@ -68,18 +65,14 @@ export default class FileExplorer extends Component {
 
 					<div align={'center'} style={{ display: 'inline', width: '1620px' }}>
 						{/* {selectedFile && selectedFile.type === 'file' && selectedFile.content} */}
-						<Route path="/worlds" exact component={Worlds} />
 						<Route path="/createworld" exact component={CreateWorlds} />
 						<Route path="/editworld/:id" exact component={EditWorlds} />
 
-						<Route path="/campaigns" exact component={Campaigns} />
 						<Route path="/createcampaign" exact component={CreateCampaign} />
 						<Route path="/editcampaign/:id" exact component={EditCampaigns} />
 
-						<Route path="/locations" exact component={Locations} />
 						<Route path="/createlocation" exact component={CreateLocation} />
 
-						<Route path="/encounters" exact component={Encounters} />
 						<Route path="/createencounter" exact component={CreateEncounter} />
 
 						<Route path="/users" exact component={Users} />

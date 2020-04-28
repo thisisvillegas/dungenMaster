@@ -21,6 +21,7 @@ router.route('/add').post((req, res) => {
 
 	console.log(req.body);
 	const name = req.body.name;
+	const type = 'campaigns';
 	const node = nodePackage;
 	const size = req.body.size;
 	const world = req.body.world;
@@ -28,6 +29,7 @@ router.route('/add').post((req, res) => {
 
 	const newCampaign = new Campaign({
 		name,
+		type,
 		node,
 		world,
 		size,

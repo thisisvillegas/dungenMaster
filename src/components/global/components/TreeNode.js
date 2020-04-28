@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import last from 'lodash/last';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import Worlds from '../../world/worlds.component';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const getPaddingLeft = (level, type) => {
 	let paddingLeft = level * 20;
@@ -38,10 +36,47 @@ const NodeIcon = styled.div`
 `;
 
 const getNodeLabel = node => last(node.path.split('/'));
-const getCategory = node => node.category;
+// const getCategory = node => node.category;
+const getId = (dataBundle, node) => {
+	let type = node.category;
+	let id = '';
+	let currentArray = dataBundle[`${type}`];
+
+	if (currentArray !== undefined) {
+		currentArray.forEach(thing => {
+			if (thing.name === getNodeLabel(node)) {
+				id = thing._id;
+			}
+		});
+	}
+	return id;
+};
+
+const buildState = (dataBundle, node) => {
+	let type = node.category;
+	let state = {};
+	let currentArray = dataBundle[`${type}`];
+
+	if (currentArray !== undefined) {
+		currentArray.forEach(gameObject => {
+			if (gameObject.name === getNodeLabel(node)) {
+				state = {
+					type: gameObject.type,
+					name: gameObject.name,
+					world: gameObject.world,
+					campaign: gameObject.campaign,
+					location: gameObject.location,
+					size: gameObject.size,
+					factions: gameObject.factions,
+				};
+			}
+		});
+	}
+	return state;
+};
 
 const TreeNode = props => {
-	const { node, getChildNodes, level, onToggle, onNodeSelect } = props;
+	const { dataBundle, node, getChildNodes, level, onToggle, onNodeSelect } = props;
 	return (
 		<React.Fragment>
 			<StyledTreeNode level={level} type={node.type}>
@@ -58,13 +93,17 @@ const TreeNode = props => {
 					role="button"
 					onClick={() => {
 						onNodeSelect(node);
-
 						console.log('node', node);
 					}}
 				>
-					{/* <StyledLink> */}
-					<Link to={`/${getCategory(node)}`}>{getNodeLabel(node)}</Link>
-					{/* </StyledLink> */}
+					<Link
+						to={{
+							pathname: '/view/' + getId(dataBundle, node),
+							state: buildState(dataBundle, node),
+						}}
+					>
+						{getNodeLabel(node)}
+					</Link>
 				</span>
 			</StyledTreeNode>
 

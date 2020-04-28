@@ -59,59 +59,90 @@ async function getData() {
 		return axios.get(`${process.env.REACT_APP_LOCAL_DB}/users/`);
 	}
 
+	let worldArray = [],
+		campaignArray = [],
+		locationArray = [],
+		encounterArray = [],
+		monsterArray = [],
+		userArray = [],
+		nugget = {};
+
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(
 		axios.spread(function(worlds, campaigns, locations, encounters, monsters, users) {
-			for (let index = 0; index < worlds.data.length; index++) {
-				Object.assign(rooter, worlds.data[index].node);
-				rooter[`/root`].children.push(Object.keys(worlds.data[index].node));
-				// console.log('worlds.data[index].node', worlds.data[index].node);
+			for (let i = 0; i < worlds.data.length; i++) {
+				Object.assign(rooter, worlds.data[i].node);
+				rooter[`/root`].children.push(Object.keys(worlds.data[i].node));
+				worldArray.push(worlds.data[i]);
 			}
 
-			for (let index = 0; index < campaigns.data.length; index++) {
-				Object.assign(rooter, campaigns.data[index].node);
-				// console.log('campaigns.data[index]', campaigns.data[index]);
-				rooter[`/root/${campaigns.data[index].world}`].children.push(Object.keys(campaigns.data[index].node));
+			for (let i = 0; i < campaigns.data.length; i++) {
+				Object.assign(rooter, campaigns.data[i].node);
+				// console.log('campaigns.data[i]', campaigns.data[i]);
+				rooter[`/root/${campaigns.data[i].world}`].children.push(Object.keys(campaigns.data[i].node));
+				campaignArray.push(campaigns.data[i]);
 			}
 
-			for (let index = 0; index < locations.data.length; index++) {
-				// console.log('locations.data[index].campaign', locations.data[index].campaign);
-				Object.assign(rooter, locations.data[index].node);
-				rooter[`/root/${locations.data[index].world}/${locations.data[index].campaign}`].children.push(
-					Object.keys(locations.data[index].node)
+			for (let i = 0; i < locations.data.length; i++) {
+				// console.log('locations.data[i].campaign', locations.data[i].campaign);
+				Object.assign(rooter, locations.data[i].node);
+				rooter[`/root/${locations.data[i].world}/${locations.data[i].campaign}`].children.push(
+					Object.keys(locations.data[i].node)
 				);
+				locationArray.push(locations.data[i]);
 			}
 
-			for (let index = 0; index < encounters.data.length; index++) {
-				Object.assign(rooter, encounters.data[index].node);
+			for (let i = 0; i < encounters.data.length; i++) {
+				Object.assign(rooter, encounters.data[i].node);
 				rooter[
-					`/root/${encounters.data[index].world}/${encounters.data[index].campaign}/${encounters.data[index].location}`
-				].children.push(Object.keys(encounters.data[index].node));
+					`/root/${encounters.data[i].world}/${encounters.data[i].campaign}/${encounters.data[i].location}`
+				].children.push(Object.keys(encounters.data[i].node));
+				encounterArray.push(encounters.data[i]);
 			}
 
-			for (let index = 0; index < monsters.data.length; index++) {
-				// console.log('monsters.data[index].node', monsters.data[index].node);
-				Object.assign(rooter, monsters.data[index].node);
-				rooter[`/admin/monsters`].children.push(Object.keys(monsters.data[index].node));
+			for (let i = 0; i < monsters.data.length; i++) {
+				// console.log('monsters.data[i].node', monsters.data[i].node);
+				Object.assign(rooter, monsters.data[i].node);
+				rooter[`/admin/monsters`].children.push(Object.keys(monsters.data[i].node));
+				monsterArray.push(monsters.data[i]);
 			}
 
-			for (let index = 0; index < users.data.length; index++) {
-				// console.log('users.data[index].node', users.data[index]);
-				Object.assign(rooter, users.data[index].node);
-				rooter[`/admin/users`].children.push(Object.keys(users.data[index].node));
+			for (let i = 0; i < users.data.length; i++) {
+				// console.log('users.data[i].node', users.data[i]);
+				Object.assign(rooter, users.data[i].node);
+				rooter[`/admin/users`].children.push(Object.keys(users.data[i].node));
+				userArray.push(users.data[i]);
 			}
-
-			console.log('rooter', rooter);
 		})
 	);
+	return { worldArray, campaignArray, locationArray, encounterArray, monsterArray, userArray };
 }
 
 export default class Tree extends Component {
 	state = {
 		nodes: rooter,
+		worlds: [],
+		campaigns: [],
+		list: {},
+		locations: [],
+		encounters: [],
+		monsters: [],
+		users: [],
+		type: '',
 	};
 
 	componentDidMount() {
-		getData();
+		getData().then(res => {
+			this.setState({
+				worlds: res.worldArray,
+				campaigns: res.campaignArray,
+				locations: res.locationArray,
+				encounters: res.encounterArray,
+				monsters: res.monsterArray,
+				users: res.userArray,
+			});
+		});
+
+		// console.log('aggregation', aggregation);
 	}
 
 	getRootNodes = () => {
@@ -138,10 +169,12 @@ export default class Tree extends Component {
 
 	render() {
 		const rootNodes = this.getRootNodes();
+		// console.log('this.state inside render', this.state);
 		return (
 			<div>
 				{rootNodes.map(node => (
 					<TreeNode
+						dataBundle={this.state}
 						node={node}
 						key={node.path}
 						getChildNodes={this.getChildNodes}

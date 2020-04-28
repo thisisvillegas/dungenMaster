@@ -70,6 +70,7 @@ export default class CreateLocation extends Component {
 		e.preventDefault();
 		const location = {
 			name: this.state.name,
+			type: 'locations',
 			world: this.state.world,
 			campaign: this.state.campaign,
 			size: this.state.size,

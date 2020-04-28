@@ -19,6 +19,7 @@ router.route('/add').post((req, res) => {
 		},
 	};
 	const name = req.body.name;
+	const type = 'encounters';
 	const node = nodePackage;
 	const world = req.body.world;
 	const campaign = req.body.campaign;
@@ -27,6 +28,7 @@ router.route('/add').post((req, res) => {
 
 	const newEncounter = new Encounter({
 		name,
+		type,
 		node,
 		world,
 		campaign,

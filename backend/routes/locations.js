@@ -21,6 +21,7 @@ router.route('/add').post((req, res) => {
 
 	console.log(req.body);
 	const name = req.body.name;
+	const type = 'locations';
 	const node = nodePackage;
 	const world = req.body.world;
 	const campaign = req.body.campaign;
@@ -28,6 +29,7 @@ router.route('/add').post((req, res) => {
 
 	const newLocation = new Location({
 		name,
+		type,
 		node,
 		world,
 		campaign,

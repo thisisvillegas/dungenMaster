@@ -22,12 +22,18 @@ router.route('/add').post((req, res) => {
 	const node = nodePackage;
 	const firstName = req.body.firstName;
 	const lastName = req.body.lastName;
+	const characterClass = req.body.class;
+	const level = req.body.level;
+	const type = 'users';
 
 	const newUser = new User({
 		username,
 		node,
 		firstName,
 		lastName,
+		characterClass,
+		level,
+		type,
 	});
 	console.log('newUser', newUser);
 	newUser
@@ -56,6 +62,9 @@ router.route('/update/:id').put((req, res) => {
 			User.node = req.body.node;
 			User.firstName = req.body.firstName;
 			User.lastName = req.body.lastName;
+			User.characterClass = req.body.characterClass;
+			User.level = req.body.level;
+			User.type = req.body.type;
 
 			User.save()
 				.then(() => res.json('User updated'))

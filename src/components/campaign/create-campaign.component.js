@@ -55,6 +55,7 @@ export default class CreateCampaign extends Component {
 		e.preventDefault();
 		const campaign = {
 			name: this.state.name,
+			type: 'campaigns',
 			world: this.state.world,
 			size: this.state.size,
 			factions: this.state.factions,
