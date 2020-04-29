@@ -80,7 +80,7 @@ export default class CreateLocation extends Component {
 		if (location.name !== '' && location.world !== '' && location.campaign !== '') {
 			console.log('Location', location);
 			axios.post('http://localhost:5001/locations/add', location).then(res => console.log(res.data));
-			window.location = '/locations';
+			window.location = '/list/locations';
 		} else {
 			console.log('shit broke');
 			alert('Please fill out all fields');

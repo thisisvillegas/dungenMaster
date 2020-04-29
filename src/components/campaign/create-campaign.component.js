@@ -65,7 +65,7 @@ export default class CreateCampaign extends Component {
 
 		if (campaign.name !== '' && campaign.world !== '' && campaign.size !== '') {
 			axios.post(`${process.env.REACT_APP_LOCAL_DB}/campaigns/add`, campaign).then(res => console.log(res.data));
-			window.location = '/campaigns';
+			window.location = '/list/campaigns';
 		} else {
 			console.log('shit broke');
 			alert('Please fill out all fields');
