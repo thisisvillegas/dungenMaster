@@ -10,7 +10,7 @@ const monsterSchema = new Schema(
 		},
 		node: {
 			type: Object,
-			required: true,
+			required: false,
 		},
 		characterClass: {
 			type: String,

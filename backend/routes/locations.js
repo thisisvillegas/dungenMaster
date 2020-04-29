@@ -56,12 +56,9 @@ router.route('/:id').delete((req, res) => {
 });
 
 router.route('/update/:id').put((req, res) => {
-	Exercise.findByIdAndUpdate(req.params.id)
+	Location.findByIdAndUpdate(req.params.id)
 		.then(Location => {
-			Location.name = req.body.name;
-			Location.node = req.body.node;
-			Location.world = req.body.world;
-			Location.campaign = req.body.campaign;
+			Location.size = req.body.size;
 			Location.factions = Number(req.body.factions);
 
 			Location.save()

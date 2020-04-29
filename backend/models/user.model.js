@@ -37,6 +37,14 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		node: {
+			type: Object,
+			required: true,
+		},
+		externalLink: {
+			type: String,
+			required: false,
+		},
 	},
 	{
 		timestamps: true,

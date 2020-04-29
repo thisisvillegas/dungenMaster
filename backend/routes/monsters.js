@@ -55,7 +55,6 @@ router.route('/update/:id').put((req, res) => {
 	Exercise.findByIdAndUpdate(req.params.id)
 		.then(monster => {
 			monster.name = req.body.name;
-			monster.node = req.body.node;
 			monster.characterClass = req.body.characterClass;
 			monster.level = req.body.level;
 

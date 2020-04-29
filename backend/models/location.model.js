@@ -14,7 +14,7 @@ const locationSchema = new Schema(
 		},
 		node: {
 			type: Object,
-			required: true,
+			required: false,
 		},
 		world: {
 			type: String,
