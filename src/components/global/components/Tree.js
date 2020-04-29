@@ -64,8 +64,8 @@ async function getData() {
 		locationArray = [],
 		encounterArray = [],
 		monsterArray = [],
-		userArray = [],
-		nugget = {};
+		userArray = [];
+	// nugget = {};
 
 	axios.all([getWorlds(), getCampaigns(), getLocations(), getEcounters(), getMonsters(), getUsers()]).then(
 		axios.spread(function(worlds, campaigns, locations, encounters, monsters, users) {

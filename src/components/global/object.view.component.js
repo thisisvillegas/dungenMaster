@@ -17,7 +17,9 @@ import {
 } from 'mdbreact';
 import axios from 'axios';
 // import SettingsIcon from '@material-ui/icons/Settings';
-import 'react-datepicker/dist/react-datepicker.css';
+import MonsterEditModal from './edit-modal.component';
+
+// console.log = function() {};
 
 const StyledCard = styled.div`
 	background-color: black;
@@ -33,32 +35,82 @@ function setImageUrl(props) {
 			return 'https://cdn.pixabay.com/photo/2017/07/22/11/46/adventure-2528477_960_720.jpg';
 		case 'encounters':
 			return 'https://cdn.pixabay.com/photo/2018/11/29/20/30/fantasy-3846432__340.jpg';
+		case 'users':
+			return 'https://cdn.pixabay.com/photo/2020/04/18/13/56/fantasy-5059251_960_720.jpg';
 		default:
 			return 'https://cdn.pixabay.com/photo/2012/05/07/12/03/frog-48234_960_720.png';
 	}
 }
 
-const CardExample = props => {
+const EncounterData = props => {
 	return (
 		<MDBCol style={{ maxWidth: '35rem', paddingTop: '3%' }}>
-			{/* {console.log('props.details', props)} */}
+			{/* {console.log('props.details in card example', props.details)} */}
 			<MDBCard>
 				<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
 				<StyledCard>
 					<MDBCardBody>
-						<MDBCardTitle>
-							<h3>{props.details.name}</h3>
-						</MDBCardTitle>
+						<MDBCardTitle>{props.details.name}</MDBCardTitle>
 						<MDBCardText>
-							<p>Size: {props.details.size}</p>
-							<p>Factions: {props.details.factions}</p>
+							<span>Factions: {props.details.factions}</span>
 
-							{!props.details.world ? '' : <p>World: {props.details.world}</p>}
-							{!props.details.campaign ? '' : <p>Campaign: {props.details.campaign}</p>}
-							{!props.details.location ? '' : <p>Location: {props.details.location}</p>}
+							{!props.details.size ? '' : <span>Size: {props.details.size}</span>}
+							{!props.details.world ? '' : <span>World: {props.details.world}</span>}
+							{!props.details.campaign ? '' : <span>Campaign: {props.details.campaign}</span>}
+							{!props.details.location ? '' : <span>Location: {props.details.location}</span>}
 						</MDBCardText>
-						<MDBBtn href={`/list/${props.details.type}`}>Go Back</MDBBtn>
-						<MDBBtn onClick={props.toggle}>Edit</MDBBtn>
+						<MDBBtn
+							style={{ color: 'white', border: '1px solid #962727' }}
+							href={`/list/${props.details.type}`}
+						>
+							Go Back
+						</MDBBtn>
+						<MDBBtn
+							style={{ color: 'white', border: '1px solid #962727', margin: '0 20px 0 20px' }}
+							onClick={props.toggle}
+						>
+							Edit
+						</MDBBtn>
+						<MDBBtn style={{ color: 'white', border: '1px solid #962727' }} onClick={props.toggle}>
+							Delete
+						</MDBBtn>
+					</MDBCardBody>
+				</StyledCard>
+			</MDBCard>
+		</MDBCol>
+	);
+};
+
+const UsersAndMonsters = props => {
+	return (
+		<MDBCol style={{ maxWidth: '35rem', paddingTop: '3%' }}>
+			{/* {console.log('props.details in users and monsters', props.details)} */}
+			<MDBCard>
+				<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
+				<StyledCard>
+					<MDBCardBody>
+						<MDBCardTitle>{props.details.username}</MDBCardTitle>
+						<MDBCardText>
+							<span>First Name: {props.details.firstName}</span>
+							<span>Last Name: {props.details.lastName}</span>
+							<span>Class: {props.details.characterClass}</span>
+							<span>Level: {props.details.level}</span>
+						</MDBCardText>
+						<MDBBtn
+							style={{ color: 'white', border: '1px solid #962727' }}
+							href={`/list/${props.details.type}`}
+						>
+							Go Back
+						</MDBBtn>
+						<MDBBtn
+							style={{ color: 'white', border: '1px solid #962727', margin: '0 20px 0 20px' }}
+							onClick={props.toggle}
+						>
+							Edit
+						</MDBBtn>
+						<MDBBtn style={{ color: 'white', border: '1px solid #962727' }} onClick={props.toggle}>
+							Delete
+						</MDBBtn>
 					</MDBCardBody>
 				</StyledCard>
 			</MDBCard>
@@ -67,31 +119,27 @@ const CardExample = props => {
 };
 
 export default class ShowObject extends Component {
-	constructor(props) {
-		super(props);
-		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeSize = this.onChangeSize.bind(this);
-		this.onChangeFactions = this.onChangeFactions.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+	state = {
+		type: '',
+		name: '',
+		world: '',
+		campaign: '',
+		location: '',
+		size: '',
+		factions: 0,
+		username: '',
+		firstName: '',
+		lastName: '',
+		characterClass: '',
+		level: '',
+	};
 
-		this.dothisthing = this.dothisthing.bind(this);
-
-		this.state = {
-			type: '',
-			name: '',
-			world: '',
-			campaign: '',
-			location: '',
-			size: '',
-			factions: 0,
-		};
-	}
-
-	componentDidMount() {
+	componentDidMount = () => {
 		const res = this.props.location.state;
 		console.log('receivedObject', res);
 
 		this.setState({
+			_id: res._id,
 			type: res.type,
 			name: res.name,
 			world: res.world,
@@ -100,10 +148,15 @@ export default class ShowObject extends Component {
 			size: res.size,
 			factions: res.factions,
 			modal: false,
+			username: res.username,
+			firstName: res.firstName,
+			lastName: res.lastName,
+			characterClass: res.characterClass,
+			level: res.level,
 		});
-	}
+	};
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = nextProps => {
 		console.log('nextProps', nextProps.location.state);
 		let res = nextProps.location.state;
 		this.setState({
@@ -114,8 +167,13 @@ export default class ShowObject extends Component {
 			location: res.location,
 			size: res.size,
 			factions: res.factions,
+			username: res.username,
+			firstName: res.firstName,
+			lastName: res.lastName,
+			characterClass: res.characterClass,
+			level: res.level,
 		});
-	}
+	};
 	toggle = () => {
 		console.log('this.state.modal', this.state.modal);
 		this.setState({
@@ -123,119 +181,121 @@ export default class ShowObject extends Component {
 		});
 	};
 
-	dothisthing(e, type) {
-		console.log('e in the do this ting', e);
+	dothisthing = (e, type) => {
+		console.log('e ', e);
 		console.log('type', type);
-		console.log('this.state.size', this.state.size);
 
 		this.setState({
 			name: e.name,
 			size: e.size,
 			factions: e.factions,
+			username: e.username,
+			firstName: e.firstName,
+			lastName: e.lastName,
+			characterClass: e.characterClass,
+			level: e.level,
 		});
-	}
 
-	onChangeName(e) {
+		// console.log('this.state in do this thing', this.state);
+
+		const element = { ...this.state };
+
+		console.log(element);
+
+		if (element.name !== '' && element.size !== '' && element.username !== '') {
+			axios
+				.put(`${process.env.REACT_APP_LOCAL_DB}/${type}/update/` + element._id, e)
+				.then(res => console.log('Success!!here is the response from the database \n', res.data));
+			console.log('hey, we sent shit out.');
+		} else {
+			console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~shit broke');
+			// alert('Please fill out all fields');
+		}
+	};
+
+	onChangeName = e => {
 		console.log('e', e);
 		this.setState({
 			name: e.target.value,
 		});
-	}
-	onChangeSize(e) {
+	};
+	onChangeSize = e => {
 		console.log('e', e);
 		this.setState({
 			size: e.target.value,
 		});
-	}
-	onChangeFactions(e) {
+	};
+	onChangeFactions = e => {
 		this.setState({
 			factions: e.target.value,
 		});
-	}
+	};
+	onChangeUsername = e => {
+		this.setState({
+			username: e.target.value,
+		});
+	};
+	onChangeFirstName = e => {
+		this.setState({
+			firstName: e.target.value,
+		});
+	};
+	onChangeLastName = e => {
+		this.setState({
+			lastName: e.target.value,
+		});
+	};
+	onChangeCharacterClass = e => {
+		this.setState({
+			characterClass: e.target.value,
+		});
+	};
+	onChangeLevel = e => {
+		this.setState({
+			level: e.target.value,
+		});
+	};
 
 	handleInput = e => {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
 	};
-	onSubmit(e) {
-		e.preventDefault();
-		const world = {
-			name: this.state.name,
-			size: this.state.size,
-			factions: this.state.factions,
-		};
-
-		console.log(world);
-
-		if (world.name !== '' && world.size !== '') {
-			axios.post(`${process.env.REACT_APP_LOCAL_DB}/worlds/add`, world).then(res => console.log(res.data));
-			window.location = '/list/worlds';
-		} else {
-			console.log('shit broke');
-			alert('Please fill out all fields');
-			window.location = 'createworld';
-		}
-	}
 	render() {
-		// console.log('currentstate', currentstate);
-		console.log('this.props.location', this.props.location);
 		return (
 			<div>
-				{console.log('this.state in Render/OVC', this.state)}
-				<CardExample details={this.state} dothisthing={this.dothisthing} toggle={this.toggle}></CardExample>
-				<MDBContainer>
-					<MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-						<MDBModalHeader style={{ color: 'black' }} toggle={this.toggle}>
-							Enter in new value
-						</MDBModalHeader>
-						<MDBModalBody style={{ color: 'black' }}>
-							<form className="mx-3 grey-text">
-								<MDBInput
-									hint="enter in a cool name"
-									type="text"
-									name="name"
-									value={this.state.name}
-									onInput={this.handleInput}
-								/>
-								<MDBInput
-									hint="enter in a cool size"
-									type="text"
-									name="size"
-									value={this.state.size}
-									onInput={this.handleInput}
-								/>
-								<MDBInput
-									hint="enter in number of factions"
-									type="text"
-									name="factions"
-									value={this.state.factions}
-									onInput={this.handleInput}
-								/>
-							</form>
-						</MDBModalBody>
-						<MDBModalFooter>
-							<MDBBtn
-								color="secondary"
-								onClick={() => {
-									this.toggle();
-									this.dothisthing(this.props.location.state);
-								}}
-							>
-								Close
-							</MDBBtn>
-							<MDBBtn
-								color="primary"
-								onClick={() => {
-									this.dothisthing(this.state);
-									this.toggle();
-								}}
-							>
-								Save changes
-							</MDBBtn>
-						</MDBModalFooter>
-					</MDBModal>
-				</MDBContainer>
+				{this.props.location.state.type === 'users' ? (
+					<div>
+						<UsersAndMonsters
+							details={this.state}
+							dothisthing={this.dothisthing}
+							toggle={this.toggle}
+						></UsersAndMonsters>
+						<MonsterEditModal
+							props={this.state}
+							handleInput={this.handleInput}
+							toggle={this.toggle}
+							dothisthing={this.dothisthing}
+							state={this.props.location.state}
+						></MonsterEditModal>
+					</div>
+				) : (
+					<div>
+						<EncounterData
+							details={this.state}
+							dothisthing={this.dothisthing}
+							toggle={this.toggle}
+						></EncounterData>
+
+						<MonsterEditModal
+							props={this.state}
+							handleInput={this.handleInput}
+							toggle={this.toggle}
+							dothisthing={this.dothisthing}
+							state={this.props.location.state}
+						></MonsterEditModal>
+					</div>
+				)}
 			</div>
 		);
 	}

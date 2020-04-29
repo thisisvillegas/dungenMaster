@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 
+// console.log = function() {};
+
 const StyledTable = styled.div`
 	background-color: black;
 	color: white;
@@ -80,7 +82,7 @@ async function loadData(type) {
 		// console.log('type that we are conditioning', type.data[0]);
 
 		for (let i = 0; i < type.data.length; i++) {
-			console.log('type.data[i]', type.data[i]);
+			// console.log('type.data[i]', type.data[i]);
 			if (type.data[i].type === 'users') {
 				typeArray.push(type.data[i]);
 				nugget = {
@@ -165,6 +167,26 @@ async function loadData(type) {
 
 					break;
 				case 'locations':
+					data.columns = [];
+					data.columns.push({
+						label: 'View',
+						field: 'icon',
+						sort: 'asc',
+						width: 25,
+					});
+					data.columns.push({
+						label: 'Name',
+						field: 'name',
+						sort: 'asc',
+						width: 150,
+					});
+					data.columns.push({
+						label: 'Factions',
+						field: 'factions',
+						sort: 'asc',
+						width: 150,
+					});
+
 					data.columns.push({
 						label: 'World',
 						field: 'world',
@@ -305,7 +327,7 @@ export default class WorldsList extends Component {
 
 	componentDidMount() {
 		loadData(this.props.match.params).then(res => {
-			console.log('res', res);
+			// console.log('res', res);
 			this.setState({
 				worlds: res.worldArray,
 				list: res.data,
