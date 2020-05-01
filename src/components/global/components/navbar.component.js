@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledDropDown = styled.div`
-	.dropdown-item {
-		margin-left: 20px;
+	.dropdown-menu a {
+		padding: 10px 0 10px 20px;
 	}
 `;
 export default class Navbar extends Component {
