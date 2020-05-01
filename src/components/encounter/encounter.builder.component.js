@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../css/encounterBuilder.css';
+
 import Encounters from './encounter.counter.component';
 
 export default class CreateEncounter extends Component {

@@ -22,7 +22,57 @@ import MonsterEditModal from './edit-modal.component';
 // console.log = function() {};
 
 const StyledCard = styled.div`
-	background-color: black;
+	display: inline-block;
+	.btn {
+		margin: 0 10px 0 10px;
+		color: primary;
+	}
+	.col {
+		maxwidth: 35rem;
+		padding: 3% 10% 0 5%;
+		width: 80%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.card-body {
+		background-color: black;
+	}
+	.card-text {
+		display: grid;
+	}
+	.card {
+		border: 1px solid white;
+	}
+	.span {
+		display: inline-block;
+	}
+`;
+
+const StyledCard2 = styled.div`
+	display: flex;
+	.btn {
+		margin: 0 10px 0 10px;
+		color: primary;
+	}
+	.col {
+		maxwidth: 35rem;
+		padding: 3% 2% 2% 2%;
+		width: 45%;
+		display: inline-block;
+	}
+	.card-body {
+		background-color: black;
+	}
+	.card-text {
+		display: grid;
+	}
+	.card {
+		border: 1px solid white;
+	}
+	.span {
+		display: inline-block;
+	}
 `;
 
 function setImageUrl(props) {
@@ -37,6 +87,8 @@ function setImageUrl(props) {
 			return 'https://cdn.pixabay.com/photo/2018/11/29/20/30/fantasy-3846432__340.jpg';
 		case 'users':
 			return 'https://cdn.pixabay.com/photo/2020/04/18/13/56/fantasy-5059251_960_720.jpg';
+		case 'monsters':
+			return 'https://image.shutterstock.com/image-illustration/kraken-creature-scandinavian-folklore-said-600w-1520624258.jpg';
 		default:
 			return 'https://cdn.pixabay.com/photo/2012/05/07/12/03/frog-48234_960_720.png';
 	}
@@ -44,85 +96,115 @@ function setImageUrl(props) {
 
 const EncounterData = props => {
 	return (
-		<MDBCol style={{ maxWidth: '35rem', paddingTop: '3%' }}>
-			{/* {console.log('props.details in card example', props.details)} */}
-			<MDBCard>
-				<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
-				<StyledCard>
-					<MDBCardBody>
-						<MDBCardTitle>{props.details.name}</MDBCardTitle>
-						<MDBCardText>
-							<span>Factions: {props.details.factions}</span>
+		<StyledCard>
+			<MDBCol>
+				{console.log('props.details in card example', props.details)}
+				<MDBCard>
+					<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
 
+					<MDBCardBody>
+						<MDBCardTitle>
+							{props.details.type === 'users' ? props.details.username : props.details.name}
+						</MDBCardTitle>
+						<MDBCardText>
+							{!props.details.factions ? '' : <span>Factions: {props.details.factions}</span>}
 							{!props.details.size ? '' : <span>Size: {props.details.size}</span>}
 							{!props.details.world ? '' : <span>World: {props.details.world}</span>}
 							{!props.details.campaign ? '' : <span>Campaign: {props.details.campaign}</span>}
 							{!props.details.location ? '' : <span>Location: {props.details.location}</span>}
+							{!props.details.lastName ? '' : <span>Last Name: {props.details.lastName}</span>}
+							{!props.details.characterClass ? '' : <span>Class: {props.details.characterClass}</span>}
+							{!props.details.level ? '' : <span>Level: {props.details.level}</span>}
 						</MDBCardText>
-						<MDBBtn
-							style={{ color: 'white', border: '1px solid #962727' }}
-							href={`/list/${props.details.type}`}
-						>
+						<MDBBtn color="elegant" size="sm" href={`/list/${props.details.type}`}>
 							Go Back
 						</MDBBtn>
-						<MDBBtn
-							style={{ color: 'white', border: '1px solid #962727', margin: '0 20px 0 20px' }}
-							onClick={props.toggle}
-						>
+						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Edit
 						</MDBBtn>
-						<MDBBtn style={{ color: 'white', border: '1px solid #962727' }} onClick={props.toggle}>
+						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Delete
 						</MDBBtn>
 					</MDBCardBody>
-				</StyledCard>
-			</MDBCard>
-		</MDBCol>
+				</MDBCard>
+			</MDBCol>
+		</StyledCard>
 	);
 };
 
-const UsersAndMonsters = props => {
+const Monsters = props => {
 	return (
-		<MDBCol style={{ maxWidth: '35rem', paddingTop: '3%' }}>
-			{/* {console.log('props.details in users and monsters', props.details)} */}
-			<MDBCard>
-				<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
-				<StyledCard>
+		<StyledCard2>
+			<MDBCol>
+				{/* {console.log('props.details in card example', props.details)} */}
+				<MDBCard>
 					<MDBCardBody>
-						<MDBCardTitle>{props.details.username}</MDBCardTitle>
+						<MDBCardTitle>{props.details.name}</MDBCardTitle>
 						<MDBCardText>
-							<span>First Name: {props.details.firstName}</span>
-							<span>Last Name: {props.details.lastName}</span>
-							<span>Class: {props.details.characterClass}</span>
-							<span>Level: {props.details.level}</span>
+							{!props.details.desc ? '' : <span>Description: {props.details.desc}</span>}
+							{!props.details.level ? '' : <span>Level: {props.details.level}</span>}
+							{!props.details.world ? '' : <span>world: {props.details.world}</span>}
+							{/* {!props.details.worlds ? '' : <span>worlds: {props.details.worlds}</span>}
+							{!props.details.campaigns ? '' : <span>campaigns: {props.details.campaigns}</span>}
+							{!props.details.locations ? '' : <span>locations: {props.details.locations}</span>}
+							{!props.details.encounters ? '' : <span>encounters: {props.details.encounters}</span>} */}
+							{!props.details.alignment ? '' : <span>Alignment: {props.details.alignment}</span>}
+							{!props.details.armorClass ? '' : <span>armorClass: {props.details.armorClass}</span>}
+							{!props.details.hitPoints ? '' : <span>hitPoints: {props.details.hitPoints}</span>}
+							{!props.details.speed ? '' : <span>speed: {props.details.speed}</span>}
+							{!props.details.str ? '' : <span>str: {props.details.str}</span>}
+							{!props.details.dex ? '' : <span>dex: {props.details.dex}</span>}
+							{!props.details.con ? '' : <span>con: {props.details.con}</span>}
+							{!props.details.int ? '' : <span>int: {props.details.int}</span>}
+							{!props.details.wis ? '' : <span>wis: {props.details.wis}</span>}
+							{!props.details.cha ? '' : <span>cha: {props.details.cha}</span>}
+							{!props.details.damageResistances ? (
+								''
+							) : (
+								<span>damageResistances: {props.details.damageResistances}</span>
+							)}
+							{!props.details.damageImmunities ? (
+								''
+							) : (
+								<span>damageImmunities: {props.details.damageImmunities}</span>
+							)}
+							{!props.details.conditionImmunities ? (
+								''
+							) : (
+								<span>conditionImmunities: {props.details.conditionImmunities}</span>
+							)}
+							{!props.details.savingThrows ? '' : <span>savingThrows: {props.details.savingThrows}</span>}
+							{!props.details.skills ? '' : <span>skills: {props.details.skills}</span>}
+							{!props.details.senses ? '' : <span>senses: {props.details.senses}</span>}
+							{!props.details.languages ? '' : <span>languages: {props.details.languages}</span>}
+							{!props.details.challenge ? '' : <span>challenge: {props.details.challenge}</span>}
+							{!props.details.abilities ? '' : <span>abilities: {props.details.abilities}</span>}
+							{!props.details.actions ? '' : <span>actions: {props.details.actions}</span>}
 						</MDBCardText>
-						<MDBBtn
-							style={{ color: 'white', border: '1px solid #962727' }}
-							href={`/list/${props.details.type}`}
-						>
+						<MDBBtn color="elegant" size="sm" href={`/list/${props.details.type}`}>
 							Go Back
 						</MDBBtn>
-						<MDBBtn
-							style={{ color: 'white', border: '1px solid #962727', margin: '0 20px 0 20px' }}
-							onClick={props.toggle}
-						>
+						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Edit
 						</MDBBtn>
-						<MDBBtn style={{ color: 'white', border: '1px solid #962727' }} onClick={props.toggle}>
+						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Delete
 						</MDBBtn>
 					</MDBCardBody>
-				</StyledCard>
-			</MDBCard>
-		</MDBCol>
+				</MDBCard>
+			</MDBCol>
+			<MDBCol>
+				{/* {console.log('props.details in card example', props.details)} */}
+				<MDBCard>
+					<MDBCardImage className="img-fluid" src={setImageUrl(props)} waves />
+				</MDBCard>
+			</MDBCol>
+		</StyledCard2>
 	);
 };
 
 export default class ShowObject extends Component {
 	state = {
-		type: '',
-		name: '',
-		world: '',
 		campaign: '',
 		location: '',
 		size: '',
@@ -131,48 +213,49 @@ export default class ShowObject extends Component {
 		firstName: '',
 		lastName: '',
 		characterClass: '',
+
+		name: '',
+		desc: '',
 		level: '',
+		type: '',
+		world: '',
+		worlds: [],
+		campaigns: [],
+		locations: [],
+		encounters: [],
+		alignment: '',
+		armorClass: 0,
+		hitPoints: 0,
+		speed: 0,
+		str: 0,
+		dex: 0,
+		con: 0,
+		int: 0,
+		wis: 0,
+		cha: 0,
+		damageResistances: '',
+		damageImmunities: '',
+		conditionImmunities: '',
+		savingThrows: '',
+		skills: '',
+		senses: '',
+		languages: '',
+		challenge: 0,
+		abilities: '',
+		actions: '',
 	};
 
 	componentDidMount = () => {
 		const res = this.props.location.state;
 		console.log('receivedObject', res);
 
-		this.setState({
-			_id: res._id,
-			type: res.type,
-			name: res.name,
-			world: res.world,
-			campaign: res.campaign,
-			location: res.location,
-			size: res.size,
-			factions: res.factions,
-			modal: false,
-			username: res.username,
-			firstName: res.firstName,
-			lastName: res.lastName,
-			characterClass: res.characterClass,
-			level: res.level,
-		});
+		this.setState({ ...res, modal: false });
 	};
 
 	componentWillReceiveProps = nextProps => {
-		console.log('nextProps', nextProps.location.state);
+		console.log('nextProps in View', nextProps.location.state);
 		let res = nextProps.location.state;
-		this.setState({
-			type: res.type,
-			name: res.name,
-			world: res.world,
-			campaign: res.campaign,
-			location: res.location,
-			size: res.size,
-			factions: res.factions,
-			username: res.username,
-			firstName: res.firstName,
-			lastName: res.lastName,
-			characterClass: res.characterClass,
-			level: res.level,
-		});
+		this.setState({ ...res });
 	};
 	toggle = () => {
 		console.log('this.state.modal', this.state.modal);
@@ -264,13 +347,9 @@ export default class ShowObject extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.location.state.type === 'users' ? (
+				{this.props.location.state.type === 'monsters' ? (
 					<div>
-						<UsersAndMonsters
-							details={this.state}
-							dothisthing={this.dothisthing}
-							toggle={this.toggle}
-						></UsersAndMonsters>
+						<Monsters details={this.state} dothisthing={this.dothisthing} toggle={this.toggle}></Monsters>
 						<MonsterEditModal
 							props={this.state}
 							handleInput={this.handleInput}

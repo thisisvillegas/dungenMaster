@@ -1,0 +1,3 @@
+notes
+
+https://www.maketecheasier.com/run-bash-commands-background-linux/

@@ -4,18 +4,26 @@ import { MDBDataTable } from 'mdbreact';
 import styled from 'styled-components';
 import axios from 'axios';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 // console.log = function() {};
 
 const StyledTable = styled.div`
 	background-color: black;
 	color: white;
-	th {
-		background-color: #545b62;
+	margin: 3% 10% 10% 10%;
+	width: 850px;
+	text-align: center;
+
+	.h3 {
+		text-align: center;
 	}
 `;
 
 async function loadData(type) {
+	console.log('type', type);
+	console.log('type.type', type.type);
 	let data = {
 		columns: [
 			{
@@ -117,7 +125,8 @@ async function loadData(type) {
 						</Link>
 					),
 					name: type.data[i].name,
-					characterClass: type.data[i].characterClass,
+					desc: type.data[i].desc,
+					alignment: type.data[i].alignment,
 					level: type.data[i].level,
 				};
 				data.rows.push(nugget);
@@ -235,7 +244,7 @@ async function loadData(type) {
 						label: 'View',
 						field: 'icon',
 						sort: 'asc',
-						width: 100,
+						width: 25,
 					});
 					data.columns.push({
 						label: 'Username',
@@ -275,7 +284,7 @@ async function loadData(type) {
 						label: 'View',
 						field: 'icon',
 						sort: 'asc',
-						width: 100,
+						width: 25,
 					});
 					data.columns.push({
 						label: 'Name',
@@ -292,8 +301,14 @@ async function loadData(type) {
 					});
 
 					data.columns.push({
-						label: 'Class',
-						field: 'characterClass',
+						label: 'Description',
+						field: 'desc',
+						sort: 'asc',
+						width: 100,
+					});
+					data.columns.push({
+						label: 'Alignment',
+						field: 'alignment',
 						sort: 'asc',
 						width: 100,
 					});
@@ -340,6 +355,28 @@ export default class WorldsList extends Component {
 			});
 		});
 	}
+
+	componentWillReceiveProps = nextProps => {
+		console.log('nextProps', nextProps);
+
+		// console.log('this.props.match.params', this.props.match.params);
+		console.log('nextProps.location.state', nextProps.location.state);
+		// let res = nextProps.location.state;
+		loadData(nextProps.location.state).then(res => {
+			console.log('res', res);
+			console.log('res.data', res.data);
+			this.setState({
+				worlds: res.worldArray,
+				list: res.data,
+				campaigns: res.campaignArray,
+				locations: res.locationArray,
+				encounters: res.encounterArray,
+				type: this.props.match.params.type,
+				users: res.userArray,
+				monsters: res.monsterArray,
+			});
+		});
+	};
 
 	render() {
 		return (

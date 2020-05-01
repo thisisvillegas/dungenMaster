@@ -15,15 +15,14 @@ import ObjView from '../../global/object.view.component';
 import ObjList from '../object.list.component';
 
 const StyledFileExplorer = styled.div`
-	width: 100%;
 	max-width: 100%;
 	display: flex;
-	background-color: black;
+	background-color: grey;
 	color: white;
 `;
 
 const TreeWrapper = styled.div`
-	width: 300px;
+	width: 325px;
 	background-color: black;
 	height: 1000px;
 	padding-top: 15px;
@@ -43,13 +42,12 @@ export default class FileExplorer extends Component {
 		return (
 			<div>
 				<NavBar />
-
 				<StyledFileExplorer>
 					<TreeWrapper>
 						<Tree onSelect={this.onSelect} />
 					</TreeWrapper>
 
-					<div align={'center'} style={{ display: 'inline', width: '1620px' }}>
+					<div>
 						<Route path="/createworld" exact component={CreateWorlds} />
 						<Route path="/createcampaign" exact component={CreateCampaign} />
 						<Route path="/createlocation" exact component={CreateLocation} />

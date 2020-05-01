@@ -37,30 +37,43 @@ const NodeIcon = styled.div`
 
 const getNodeLabel = node => last(node.path.split('/'));
 // const getCategory = node => node.category;
-const getId = (dataBundle, node) => {
+const getPath = (dataBundle, node) => {
 	let type = node.category;
-	let id = '';
+	let viewId = '';
+	let list = '';
+
 	let currentArray = dataBundle[`${type}`];
 
 	if (currentArray !== undefined) {
+		// console.log('currentArray', currentArray);
+
 		currentArray.forEach(thing => {
-			if (thing.name === getNodeLabel(node)) {
-				id = thing._id;
+			if (thing.name === getNodeLabel(node) || thing.username === getNodeLabel(node)) {
+				viewId = `/view/${thing._id}`;
+			} else {
+				list = `/list/${thing.type}`;
 			}
 		});
 	}
-	return id;
+
+	return viewId.length > 10 ? viewId : list;
 };
 
 const buildState = (dataBundle, node) => {
 	let type = node.category;
 	let state = {};
+	let targetList = {};
 	let currentArray = dataBundle[`${type}`];
 
 	if (currentArray !== undefined) {
 		currentArray.forEach(gameObject => {
-			if (gameObject.name === getNodeLabel(node)) {
+			// console.log('gameObject', gameObject);
+			// console.log('node', node);
+			if (gameObject.name === getNodeLabel(node) || gameObject.username === getNodeLabel(node)) {
+				// console.log(`name: ${gameObject.name}`);
+
 				state = {
+					_id: gameObject._id,
 					type: gameObject.type,
 					name: gameObject.name,
 					world: gameObject.world,
@@ -68,11 +81,21 @@ const buildState = (dataBundle, node) => {
 					location: gameObject.location,
 					size: gameObject.size,
 					factions: gameObject.factions,
+					username: gameObject.username,
+					firstName: gameObject.firstName,
+					lastName: gameObject.lastName,
+					characterClass: gameObject.characterClass,
+					level: gameObject.level,
 				};
+				// console.log('state is being set', state);
+			} else if (type === 'users' || type === 'monsters') {
+				targetList = { type: gameObject.type };
+			} else if (getNodeLabel(node)) {
 			}
 		});
 	}
-	return state;
+
+	return state._id !== undefined ? state : targetList;
 };
 
 const TreeNode = props => {
@@ -94,21 +117,28 @@ const TreeNode = props => {
 					onClick={() => {
 						onNodeSelect(node);
 						console.log('node', node);
+						// console.log('dataBundle', dataBundle);
 					}}
 				>
-					<Link
-						to={{
-							pathname: '/view/' + getId(dataBundle, node),
-							state: buildState(dataBundle, node),
-						}}
-					>
-						{getNodeLabel(node)}
-					</Link>
+					{getNodeLabel(node) === 'admin' || getNodeLabel(node) === 'root' ? (
+						getNodeLabel(node)
+					) : (
+						<Link
+							to={{
+								pathname: getPath(dataBundle, node),
+								state: buildState(dataBundle, node),
+							}}
+						>
+							{getNodeLabel(node)}
+						</Link>
+					)}
 				</span>
 			</StyledTreeNode>
 
 			{node.isOpen &&
-				getChildNodes(node).map(childNode => <TreeNode {...props} node={childNode} level={level + 1} />)}
+				getChildNodes(node).map(childNode => (
+					<TreeNode {...props} node={childNode} key={node.children} level={level + 1} />
+				))}
 		</React.Fragment>
 	);
 };

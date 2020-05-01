@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput } from 'mdbreact';
+import {
+	MDBBtn,
+	MDBCard,
+	MDBCardBody,
+	MDBCardImage,
+	MDBCardTitle,
+	MDBCardText,
+	MDBCol,
+	MDBInput,
+	MDBRow,
+} from 'mdbreact';
 // import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const StyledCard = styled.div`
 	background-color: black;
+	.row {
+		margin: -35px 5px 0 5px;
+	}
+	.btn {
+	}
 `;
 
 export default class CreateMonster extends Component {
@@ -30,16 +45,16 @@ export default class CreateMonster extends Component {
 		int: 0,
 		wis: 0,
 		cha: 0,
-		damageResistances: [],
-		damageImmunities: [],
-		conditionImmunities: [],
-		savingThrows: [],
-		skills: [],
-		senses: [],
-		languages: [],
+		damageResistances: '',
+		damageImmunities: '',
+		conditionImmunities: '',
+		savingThrows: '',
+		skills: '',
+		senses: '',
+		languages: '',
 		challenge: 0,
-		abilities: [],
-		actions: [],
+		abilities: '',
+		actions: '',
 	};
 
 	// componentDidMount() {
@@ -178,6 +193,7 @@ export default class CreateMonster extends Component {
 		});
 	};
 	onSubmit = node => {
+		console.log('welcome to on submit');
 		node.preventDefault();
 		const monster = {
 			name: this.state.name,
@@ -211,7 +227,7 @@ export default class CreateMonster extends Component {
 			actions: this.state.actions,
 		};
 
-		console.log(monster);
+		console.log('payload to be posted', monster);
 
 		if (monster.name !== '') {
 			axios.post(`${process.env.REACT_APP_LOCAL_DB}/monsters/add`, monster).then(res => console.log(res.data));
@@ -222,98 +238,147 @@ export default class CreateMonster extends Component {
 			window.location = 'createuser';
 		}
 	};
+
 	render() {
 		return (
-			<div>
-				<h3>Create New Monster</h3>
-
-				<MDBCol style={{ maxWidth: '35rem', paddingTop: '3%' }}>
-					{/* {console.log('props.details in users and monsters', props.details)} */}
-					<MDBCard>
-						{/* <MDBCardImage className="img-fluid" src={} waves /> */}
-						<StyledCard>
-							<MDBCardBody>
-								<MDBCardTitle>WE CREATING MONSTERS BITCH</MDBCardTitle>
-								<MDBCardText>
-									<MDBInput label="Name" type="text" onChange={this.onChangeName} />
-									card text, this is where the fields will go.
-								</MDBCardText>
-								<MDBBtn
-									style={{ color: 'white', border: '1px solid #962727' }}
-									href={`/list/${this.state.type}`}
-								>
-									Go Back
-								</MDBBtn>
-								<MDBBtn
-									style={{ color: 'white', border: '1px solid #962727', margin: '0 0 0 20px' }}
-									onClick={console.log('this is where we save the data')}
-								>
-									Summon
-								</MDBBtn>
-							</MDBCardBody>
-						</StyledCard>
-					</MDBCard>
-				</MDBCol>
-				{/* <form onSubmit={this.onSubmit}>
-					<div className="form-group">
-						<label>Name: </label>
-						<input
-							type="text"
-							className="form-control"
-							value={this.state.name}
-							onChange={this.onChangeName}
-						/>
-					</div>
-					<div className="form-group">
-						<label>Level: </label>
-						<input
-							type="number"
-							className="form-control"
-							value={this.state.level}
-							onChange={this.onChangeLevel}
-						/>
-					</div>
-					<div className="form-group">
-						<label>Description: </label>
-						<input
-							type="text"
-							className="form-control"
-							value={this.state.desc}
-							onChange={this.onChangeDesc}
-						/>
-					</div>
-					<div className="form-group">
-						<label>Alignment: </label>
-						<input
-							type="text"
-							className="form-control"
-							value={this.state.alignment}
-							onChange={this.onChangeAlignment}
-						/>
-					</div>
-					<div className="form-group">
-						<label>Armor Class: </label>
-						<input
-							type="number"
-							className="form-control"
-							value={this.state.armorClass}
-							onChange={this.onChangeArmorClass}
-						/>
-					</div>
-					<div className="form-group">
-						<label>Hit Points:</label>
-						<input
-							type="number"
-							className="form-control"
-							value={this.state.hitPoints}
-							onChange={this.onChangeHitPoints}
-						/>
-					</div>
-					<div className="form-group">
-						<input type="submit" value="Create User" className="btn btn-primary" />
-					</div>
-				</form> */}
-			</div>
+			<MDBCol style={{ maxWidth: '55rem', paddingTop: '2%' }}>
+				{/* {console.log('props.details in users and monsters', props.details)} */}
+				<MDBCard>
+					{/* <MDBCardImage
+						className="img-fluid"
+						width="50%"
+						src={'https://cdn.pixabay.com/photo/2013/07/13/12/04/death-159120_960_720.png'}
+						waves
+					/> */}
+					<StyledCard>
+						<MDBCardBody>
+							<MDBCardTitle>WE CREATING MONSTERS BITCH</MDBCardTitle>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="name" type="text" onChange={this.onChangeName} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="level" type="number" onChange={this.onChangeLevel} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="6">
+									<MDBInput label="desc" type="text" onChange={this.onChangeDesc} />
+								</MDBCol>
+								<MDBCol size="6">
+									<MDBInput label="alignment" type="text" onChange={this.onChangeAlignment} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="armor class" type="number" onChange={this.onChangeArmorClass} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="hit points" type="number" onChange={this.onChangeHitPoints} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="speed" type="number" onChange={this.onChangeSpeed} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="2">
+									<MDBInput label="str" type="number" onChange={this.onChangeStr} />
+								</MDBCol>
+								<MDBCol size="2">
+									<MDBInput label="dex" type="number" onChange={this.onChangeDex} />
+								</MDBCol>
+								<MDBCol size="2">
+									<MDBInput label="con" type="number" onChange={this.onChangeCon} />
+								</MDBCol>
+								<MDBCol size="2">
+									<MDBInput label="int" type="number" onChange={this.onChangeInt} />
+								</MDBCol>
+								<MDBCol size="2">
+									<MDBInput label="wis" type="number" onChange={this.onChangeWis} />
+								</MDBCol>
+								<MDBCol size="2">
+									<MDBInput label="cha" type="number" onChange={this.onChangeCha} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput
+										label="damage resistances"
+										type="text"
+										onChange={this.onChangeDamageResistance}
+									/>
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput
+										label="damage immunities"
+										type="text"
+										onChange={this.onChangeDamageImmunities}
+									/>
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput
+										label="condition immunities"
+										type="text"
+										onChange={this.onChangeConditionImmunities}
+									/>
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="saving throws" type="text" onChange={this.onChangeSavingThrows} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="skills" type="text" onChange={this.onChangeSkills} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="senses" type="text" onChange={this.onChangeSenses} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="language" type="text" onChange={this.onChangeLanguages} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="challenge" type="text" onChange={this.onChangeChallenge} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="abilities" type="text" onChange={this.onChangeAbilities} />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="actions" type="text" onChange={this.onChangeActions} />
+								</MDBCol>
+							</MDBRow>
+							<MDBCardText>
+								<span>Happy Hunting</span>
+							</MDBCardText>
+							<MDBBtn href={`/list/${this.state.type}`}>Go Back</MDBBtn>
+							<MDBBtn style={{ margin: '0 0 0 20px' }} onClick={this.onSubmit}>
+								Summon
+							</MDBBtn>
+						</MDBCardBody>
+					</StyledCard>
+				</MDBCard>
+			</MDBCol>
 		);
 	}
 }
