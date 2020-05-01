@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
+	MDBAlert,
 	MDBBtn,
 	MDBCard,
 	MDBCardBody,
@@ -136,7 +137,7 @@ const Monsters = props => {
 	return (
 		<StyledCard2>
 			<MDBCol>
-				{/* {console.log('props.details in card example', props.details)} */}
+				{console.log('props.details in card example', props)}
 				<MDBCard>
 					<MDBCardBody>
 						<MDBCardTitle>{props.details.name}</MDBCardTitle>
@@ -187,7 +188,15 @@ const Monsters = props => {
 						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Edit
 						</MDBBtn>
-						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
+						<MDBBtn
+							color="elegant"
+							size="sm"
+							onClick={() => {
+								window.confirm('You cool with deleting this?')
+									? props.deleteElement(props.details.type, props.details._id)
+									: console.log('');
+							}}
+						>
 							Delete
 						</MDBBtn>
 					</MDBCardBody>
@@ -264,20 +273,18 @@ export default class ShowObject extends Component {
 		});
 	};
 
+	deleteElement = (type, id) => {
+		this.toggle();
+		console.log(`deleting this type ${type} with id ${id}`);
+		axios.delete(`${process.env.REACT_APP_LOCAL_DB}/${type}/` + id).then(res => console.log(res.data));
+		window.location = `/list/${type}`;
+	};
+
 	dothisthing = (e, type) => {
 		console.log('e ', e);
 		console.log('type', type);
 
-		this.setState({
-			name: e.name,
-			size: e.size,
-			factions: e.factions,
-			username: e.username,
-			firstName: e.firstName,
-			lastName: e.lastName,
-			characterClass: e.characterClass,
-			level: e.level,
-		});
+		this.setState({ ...e });
 
 		// console.log('this.state in do this thing', this.state);
 
@@ -285,7 +292,7 @@ export default class ShowObject extends Component {
 
 		console.log(element);
 
-		if (element.name !== '' && element.size !== '' && element.username !== '') {
+		if (element.name !== '' || element.username !== '') {
 			axios
 				.put(`${process.env.REACT_APP_LOCAL_DB}/${type}/update/` + element._id, e)
 				.then(res => console.log('Success!!here is the response from the database \n', res.data));
@@ -349,7 +356,12 @@ export default class ShowObject extends Component {
 			<div>
 				{this.props.location.state.type === 'monsters' ? (
 					<div>
-						<Monsters details={this.state} dothisthing={this.dothisthing} toggle={this.toggle}></Monsters>
+						<Monsters
+							details={this.state}
+							dothisthing={this.dothisthing}
+							toggle={this.toggle}
+							deleteElement={this.deleteElement}
+						></Monsters>
 						<MonsterEditModal
 							props={this.state}
 							handleInput={this.handleInput}

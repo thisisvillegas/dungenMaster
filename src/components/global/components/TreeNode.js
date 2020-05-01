@@ -72,21 +72,7 @@ const buildState = (dataBundle, node) => {
 			if (gameObject.name === getNodeLabel(node) || gameObject.username === getNodeLabel(node)) {
 				// console.log(`name: ${gameObject.name}`);
 
-				state = {
-					_id: gameObject._id,
-					type: gameObject.type,
-					name: gameObject.name,
-					world: gameObject.world,
-					campaign: gameObject.campaign,
-					location: gameObject.location,
-					size: gameObject.size,
-					factions: gameObject.factions,
-					username: gameObject.username,
-					firstName: gameObject.firstName,
-					lastName: gameObject.lastName,
-					characterClass: gameObject.characterClass,
-					level: gameObject.level,
-				};
+				state = { ...gameObject };
 				// console.log('state is being set', state);
 			} else if (type === 'users' || type === 'monsters') {
 				targetList = { type: gameObject.type };

@@ -17,19 +17,46 @@ import {
 } from 'mdbreact';
 
 const InputFields = props => {
-	// console.log('props in Input Field', props.data.props);
-	// console.log('state in Input Field', props.data.state);
+	console.log('props in Input Field', props.data.props);
+	console.log('state in Input Field', props.data.state);
 	const {
-		name,
 		username,
 		firstName,
 		lastName,
 		characterClass,
-		level,
 		size,
 		factions,
 		modal,
+		name,
+		node,
+		desc,
+		level,
 		type,
+		world,
+		worlds,
+		campaigns,
+		locations,
+		encounters,
+		alignment,
+		armorClass,
+		hitPoints,
+		speed,
+		str,
+		dex,
+		con,
+		int,
+		wis,
+		cha,
+		damageResistances,
+		damageImmunities,
+		conditionImmunities,
+		savingThrows,
+		skills,
+		senses,
+		languages,
+		challenge,
+		abilities,
+		actions,
 	} = props.data.props;
 	const { handleInput, toggle, dothisthing } = props.data;
 
@@ -91,14 +118,59 @@ const InputFields = props => {
 						onInput={handleInput}
 						readonly="readOnly"
 					/>
-					<MDBInput hint="enter in a cool size" type="text" name="size" value={size} onInput={handleInput} />
+					<MDBInput hint="desc" type="text" name="desc" value={desc} onInput={handleInput} />
+					<MDBInput hint="level" type="text" name="level" value={level} onInput={handleInput} />
+					<MDBInput hint="world" type="text" name="world" value={world} onInput={handleInput} />
+					<MDBInput hint="alignment" type="text" name="alignment" value={alignment} onInput={handleInput} />
 					<MDBInput
-						hint="enter in number of factions"
-						type="text"
-						name="factions"
-						value={factions}
+						hint="armorClass"
+						type="number"
+						name="armorClass"
+						value={armorClass}
 						onInput={handleInput}
 					/>
+					<MDBInput hint="hitPoints" type="text" name="hitPoints" value={hitPoints} onInput={handleInput} />
+					<MDBInput hint="speed" type="text" name="speed" value={speed} onInput={handleInput} />
+					<MDBInput hint="str" type="text" name="str" value={str} onInput={handleInput} />
+					<MDBInput hint="dex" type="text" name="dex" value={dex} onInput={handleInput} />
+					<MDBInput hint="con" type="text" name="con" value={con} onInput={handleInput} />
+					<MDBInput hint="int" type="text" name="int" value={int} onInput={handleInput} />
+					<MDBInput hint="wis" type="text" name="wis" value={wis} onInput={handleInput} />
+					<MDBInput hint="cha" type="text" name="cha" value={cha} onInput={handleInput} />
+					<MDBInput
+						hint="damageResistances"
+						type="text"
+						name="damageResistances"
+						value={damageResistances}
+						onInput={handleInput}
+					/>
+					<MDBInput
+						hint="damageImmunities"
+						type="text"
+						name="damageImmunities"
+						value={damageImmunities}
+						onInput={handleInput}
+					/>
+					<MDBInput
+						hint="conditionImmunities"
+						type="text"
+						name="conditionImmunities"
+						value={conditionImmunities}
+						onInput={handleInput}
+					/>
+					<MDBInput
+						hint="savingThrows"
+						type="text"
+						name="savingThrows"
+						value={savingThrows}
+						onInput={handleInput}
+					/>
+					<MDBInput hint="skills" type="text" name="skills" value={skills} onInput={handleInput} />
+					<MDBInput hint="senses" type="text" name="senses" value={senses} onInput={handleInput} />
+					<MDBInput hint="languages" type="text" name="languages" value={languages} onInput={handleInput} />
+					<MDBInput hint="abilities" type="text" name="abilities" value={abilities} onInput={handleInput} />
+					<MDBInput hint="actions" type="text" name="actions" value={actions} onInput={handleInput} />
+					<MDBInput hint="challenge" type="text" name="challenge" value={challenge} onInput={handleInput} />
 				</form>
 			);
 			break;
@@ -128,14 +200,14 @@ const InputFields = props => {
 			return (
 				<form className="mx-3 grey-text">
 					<MDBInput
-						hint="enter in a cool name"
+						hint="enter in a cool-name"
 						type="text"
 						name="name"
 						value={name}
 						onInput={handleInput}
-						readonly="readonly"
+						readonly="readOnly"
 					/>
-					<MDBInput hint="enter in a cool size" type="text" name="size" value={size} onInput={handleInput} />
+					<MDBInput hint="enter in a coolsize" type="text" name="size" value={size} onInput={handleInput} />
 					<MDBInput
 						hint="enter in number of factions"
 						type="text"

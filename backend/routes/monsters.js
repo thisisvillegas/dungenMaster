@@ -104,16 +104,41 @@ router.route('/:id').delete((req, res) => {
 });
 
 router.route('/update/:id').put((req, res) => {
-	Exercise.findByIdAndUpdate(req.params.id)
+	Monster.findByIdAndUpdate(req.params.id)
 		.then(monster => {
 			monster.name = req.body.name;
 			monster.desc = req.body.desc;
 			monster.level = req.body.level;
+			monster.world = req.body.world;
+			monster.alignment = req.body.alignment;
+			monster.armorClass = req.body.armorClass;
+			monster.hitPoints = req.body.hitPoints;
+			monster.speed = req.body.speed;
+			monster.str = req.body.str;
+			monster.dex = req.body.dex;
+			monster.con = req.body.con;
+			monster.int = req.body.int;
+			monster.wis = req.body.wis;
+			monster.cha = req.body.cha;
+			monster.damageResistances = req.body.damageResistances;
+			monster.damageImmunities = req.body.damageImmunities;
+			monster.conditionImmunities = req.body.conditionImmunities;
+			monster.savingThrows = req.body.savingThrows;
+			monster.skills = req.body.skills;
+			monster.senses = req.body.senses;
+			monster.languages = req.body.languages;
+			monster.challenge = req.body.challenge;
+			monster.abilities = req.body.abilities;
+			monster.actions = req.body.actions;
 
-			Monster.save()
+			monster
+				.save()
 				.then(() => res.json('Monster updated'))
 				.catch(err => res.status(400).json(err));
 		})
-		.catch(err => res.status(400).json(err));
+		.catch(err => {
+			res.status(400).json(err);
+			console.log('err', err);
+		});
 });
 module.exports = router;
