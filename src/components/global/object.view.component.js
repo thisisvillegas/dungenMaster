@@ -123,7 +123,15 @@ const EncounterData = props => {
 						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
 							Edit
 						</MDBBtn>
-						<MDBBtn color="elegant" size="sm" onClick={props.toggle}>
+						<MDBBtn
+							color="elegant"
+							size="sm"
+							onClick={() => {
+								window.confirm('You cool with deleting this?')
+									? props.deleteElement(props.details.type, props.details._id)
+									: console.log('');
+							}}
+						>
 							Delete
 						</MDBBtn>
 					</MDBCardBody>
@@ -376,6 +384,7 @@ export default class ShowObject extends Component {
 							details={this.state}
 							dothisthing={this.dothisthing}
 							toggle={this.toggle}
+							deleteElement={this.deleteElement}
 						></EncounterData>
 
 						<MonsterEditModal

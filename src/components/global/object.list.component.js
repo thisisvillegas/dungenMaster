@@ -13,11 +13,16 @@ const StyledTable = styled.div`
 	background-color: black;
 	color: white;
 	margin: 3% 10% 10% 10%;
-	width: 850px;
-	text-align: center;
+	width: auto;
+	min-width: 720px;
+	text-align: left;
 
 	.h3 {
 		text-align: center;
+	}
+
+	.row {
+		margin: auto;
 	}
 `;
 
@@ -382,7 +387,7 @@ export default class WorldsList extends Component {
 		return (
 			<div>
 				{console.log('this.state in olc render', this.state)}
-				<h3>{this.state.type}</h3>
+				<h3 style={{ textAlign: 'left', margin: '3% 0 3% 10%' }}>{this.state.type}</h3>
 				<StyledTable>
 					<MDBDataTable
 						tbodyTextWhite={true}
