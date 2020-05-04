@@ -16,6 +16,7 @@
 		"dotenv": "^8.2.0",
 		"jquery": "^3.4.1",
 		"mdbreact": "^4.25.6",
+		"npm-force-resolutions": "0.0.3",
 		"popper.js": "^1.16.1",
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",

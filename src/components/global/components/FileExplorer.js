@@ -15,7 +15,7 @@ import ObjView from '../../global/object.view.component';
 import ObjList from '../object.list.component';
 
 const StyledFileExplorer = styled.div`
-	max-width: 100%;
+	width: 1440px;
 	display: flex;
 	background-color: grey;
 	color: white;

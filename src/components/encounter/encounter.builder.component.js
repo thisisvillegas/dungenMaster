@@ -1,31 +1,208 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import {
+	MDBAlert,
+	MDBBtn,
+	MDBCard,
+	MDBCardBody,
+	MDBCardImage,
+	MDBCardTitle,
+	MDBCardText,
+	MDBCol,
+	MDBContainer,
+	MDBInput,
+	MDBModal,
+	MDBModalBody,
+	MDBModalHeader,
+	MDBModalFooter,
+	MDBRow,
+} from 'mdbreact';
 import axios from 'axios';
 
 import Encounters from './encounter.counter.component';
+import ObjectList from '../global/object.list.component';
+
+const StyledCard = styled.div`
+	display: inline-block;
+	width: 360px;
+
+	.btn {
+		margin: 0 10px 0 10px;
+		color: primary;
+	}
+	.col {
+		padding: 3% 10% 0 5%;
+
+		justify-content: center;
+		align-items: center;
+	}
+	.card-body {
+		background-color: black;
+	}
+	.card-text {
+		display: grid;
+	}
+	.card {
+		height: 425px;
+		width: 300px;
+		border: 1px solid white;
+	}
+	.span {
+		display: inline-block;
+	}
+	.row {
+		margin: -35px 0 0 0;
+	}
+`;
+
+const StyledCard2 = styled.div`
+	display: inline-block;
+	width: 360px;
+
+	.btn {
+		margin: 0 10px 0 10px;
+		color: primary;
+	}
+	.col {
+		padding: 3% 10% 0 5%;
+
+		justify-content: center;
+		align-items: center;
+	}
+	.card-body {
+		background-color: black;
+	}
+	.card-text {
+		display: grid;
+	}
+	.card {
+		height: 250px;
+		width: 300px;
+		border: 1px solid white;
+	}
+	.span {
+		display: inline-block;
+	}
+`;
+
+const FactionData = props => {
+	return (
+		<StyledCard>
+			<MDBCol>
+				{console.log('props.details in card example', props.details)}
+				<MDBCard>
+					{/* <x/MDBCardImage className="img-fluid" src={} waves /> */}
+
+					<MDBCardBody>
+						<MDBCardTitle>Faction</MDBCardTitle>
+						<MDBCardText>
+							<span>Monster 1</span>
+							<span>Monster 1</span>
+							<span>Monster 1</span>
+							<span>Monster 1</span>
+							<span>Monster 2</span>
+							<span>Monster 2</span>
+						</MDBCardText>
+					</MDBCardBody>
+				</MDBCard>
+			</MDBCol>
+		</StyledCard>
+	);
+};
+
+let mockCampaigns = ['Camp1', 'Camp2'];
+
+const EncounterData = props => {
+	return (
+		<StyledCard>
+			<MDBCol>
+				{console.log('props.details in Encounter Data', props.details)}
+				<MDBCard>
+					{/* <MDBCardImage
+						className="img-fluid"
+						src={'https://www.searchpng.com/wp-content/uploads/2019/12/versus-Image-PNG-715x715.jpg'}
+						waves
+					/> */}
+
+					<MDBCardBody>
+						<MDBCardTitle>Encounter Details</MDBCardTitle>
+						<MDBCardText>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="name" type="text" />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="location" type="text" />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="style" type="text" />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<MDBInput label="description" type="text" />
+								</MDBCol>
+							</MDBRow>
+							<MDBRow center>
+								<MDBCol size="12">
+									<select label="Location" value={'Location'}>
+										{props.details.locations.map(location => {
+											return (
+												<option key={location.name} value={location.name}>
+													{location.name}
+												</option>
+											);
+										})}
+									</select>
+								</MDBCol>
+							</MDBRow>
+						</MDBCardText>
+					</MDBCardBody>
+				</MDBCard>
+			</MDBCol>
+		</StyledCard>
+	);
+};
+
+const DataPickers = props => {
+	return (
+		<StyledCard2>
+			<MDBCol>
+				{console.log('props.details in card example', props.details)}
+				<MDBCard>
+					{/* <MDBCardImage className="img-fluid" src={} waves /> */}
+
+					<MDBCardBody>
+						<MDBCardTitle>Monsters</MDBCardTitle>
+						<MDBCardText>
+							<span>Monster 1</span>
+							<span>Monster 2</span>
+							<span>Monster 3</span>
+						</MDBCardText>
+					</MDBCardBody>
+				</MDBCard>
+			</MDBCol>
+		</StyledCard2>
+	);
+};
 
 export default class CreateEncounter extends Component {
-	constructor(props) {
-		super(props);
-		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeCampaign = this.onChangeCampaign.bind(this);
-		this.onChangeWorld = this.onChangeWorld.bind(this);
-		this.onChangeLocation = this.onChangeLocation.bind(this);
-		this.onChangeFactions = this.onChangeFactions.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+	state = {
+		name: '',
+		world: '',
+		worlds: [],
+		campaign: '',
+		campaigns: [],
+		location: '',
+		locations: [],
+		factions: 0,
+	};
 
-		this.state = {
-			name: '',
-			world: '',
-			worlds: [],
-			campaign: '',
-			campaigns: [],
-			location: '',
-			locations: [],
-			factions: 0,
-		};
-	}
-
-	componentDidMount() {
+	componentDidMount = () => {
 		axios.get('http://localhost:5001/worlds/').then(res => {
 			if (res.data.length > 0) {
 				this.setState({
@@ -56,33 +233,33 @@ export default class CreateEncounter extends Component {
 				});
 			}
 		});
-	}
-	onChangeName(e) {
+	};
+	onChangeName = e => {
 		this.setState({
 			name: e.target.value,
 		});
-	}
-	onChangeWorld(e) {
+	};
+	onChangeWorld = e => {
 		this.setState({
 			world: e.target.value,
 		});
-	}
-	onChangeCampaign(e) {
+	};
+	onChangeCampaign = e => {
 		this.setState({
 			campaign: e.target.value,
 		});
-	}
-	onChangeLocation(e) {
+	};
+	onChangeLocation = e => {
 		this.setState({
 			location: e.target.value,
 		});
-	}
-	onChangeFactions(e) {
+	};
+	onChangeFactions = e => {
 		this.setState({
 			factions: e.target.value,
 		});
-	}
-	onSubmit(e) {
+	};
+	onSubmit = e => {
 		e.preventDefault();
 		const encounter = {
 			name: this.state.name,
@@ -97,445 +274,32 @@ export default class CreateEncounter extends Component {
 		axios.post('http://localhost:5001/encounters/add', encounter).then(res => console.log(res.data));
 
 		window.location = '/encounters';
-	}
+	};
 	render() {
 		return (
 			<div>
-				<h1>Create New Encounter</h1>
-				<div id="container">
-					<div>
-						<form onSubmit={this.onSubmit}>
-							<h3>Details</h3>
-							<div className="form-group">
-								<label>Name: </label>
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.name}
-									onChange={this.onChangeName}
-								/>
-							</div>
-							<div className="form-group">
-								<label>World: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.world}
-									onChange={this.onChangeWorld}
-								>
-									{this.state.worlds.map(world => {
-										return (
-											<option key={world} value={world}>
-												{world}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Campaign: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.campaign}
-									onChange={this.onChangeCampaign}
-								>
-									{this.state.campaigns
-										.filter(campaign => campaign.world === this.state.world)
-										.map(campaign => {
-											return (
-												<option key={campaign.name} value={campaign.name}>
-													{campaign.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Location: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.location}
-									onChange={this.onChangeLocation}
-								>
-									{this.state.locations
-										.filter(location => location.world === this.state.world)
-										.filter(location => location.campaign === this.state.campaign)
-										.map(location => {
-											return (
-												<option key={location.name} value={location.name}>
-													{location.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Factions: </label>
-								<input
-									type="number"
-									className="form-control"
-									value={this.state.factions}
-									onChange={this.onChangeFactions}
-								/>
-							</div>
-							<div className="form-group">
-								<input type="submit" value="Create Encounter" className="btn btn-primary" />
-							</div>
-						</form>
-					</div>
-					<div>
-						<form onSubmit={this.onSubmit}>
-							<h3>Monsters</h3>
-							<div className="form-group">
-								<label>Name: </label>
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.name}
-									onChange={this.onChangeName}
-								/>
-							</div>
-							<div className="form-group">
-								<label>World: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.world}
-									onChange={this.onChangeWorld}
-								>
-									{this.state.worlds.map(world => {
-										return (
-											<option key={world} value={world}>
-												{world}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Campaign: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.campaign}
-									onChange={this.onChangeCampaign}
-								>
-									{this.state.campaigns
-										.filter(campaign => campaign.world === this.state.world)
-										.map(campaign => {
-											return (
-												<option key={campaign.name} value={campaign.name}>
-													{campaign.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Location: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.location}
-									onChange={this.onChangeLocation}
-								>
-									{this.state.locations
-										.filter(location => location.world === this.state.world)
-										.filter(location => location.campaign === this.state.campaign)
-										.map(location => {
-											return (
-												<option key={location.name} value={location.name}>
-													{location.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Factions: </label>
-								<input
-									type="number"
-									className="form-control"
-									value={this.state.factions}
-									onChange={this.onChangeFactions}
-								/>
-							</div>
-							<div className="form-group">
-								<input type="submit" value="Create Encounter" className="btn btn-primary" />
-							</div>
-						</form>
-					</div>
-					<div>
-						<form onSubmit={this.onSubmit}>
-							<h3>PC</h3>
-							<div className="form-group">
-								<label>Name: </label>
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.name}
-									onChange={this.onChangeName}
-								/>
-							</div>
-							<div className="form-group">
-								<label>World: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.world}
-									onChange={this.onChangeWorld}
-								>
-									{this.state.worlds.map(world => {
-										return (
-											<option key={world} value={world}>
-												{world}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Campaign: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.campaign}
-									onChange={this.onChangeCampaign}
-								>
-									{this.state.campaigns
-										.filter(campaign => campaign.world === this.state.world)
-										.map(campaign => {
-											return (
-												<option key={campaign.name} value={campaign.name}>
-													{campaign.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Location: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.location}
-									onChange={this.onChangeLocation}
-								>
-									{this.state.locations
-										.filter(location => location.world === this.state.world)
-										.filter(location => location.campaign === this.state.campaign)
-										.map(location => {
-											return (
-												<option key={location.name} value={location.name}>
-													{location.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Factions: </label>
-								<input
-									type="number"
-									className="form-control"
-									value={this.state.factions}
-									onChange={this.onChangeFactions}
-								/>
-							</div>
-							<div className="form-group">
-								<input type="submit" value="Create Encounter" className="btn btn-primary" />
-							</div>
-						</form>
-					</div>
-					<div>
-						<form onSubmit={this.onSubmit}>
-							<h3>NPC</h3>
-							<div className="form-group">
-								<label>Name: </label>
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.name}
-									onChange={this.onChangeName}
-								/>
-							</div>
-							<div className="form-group">
-								<label>World: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.world}
-									onChange={this.onChangeWorld}
-								>
-									{this.state.worlds.map(world => {
-										return (
-											<option key={world} value={world}>
-												{world}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Campaign: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.campaign}
-									onChange={this.onChangeCampaign}
-								>
-									{this.state.campaigns
-										.filter(campaign => campaign.world === this.state.world)
-										.map(campaign => {
-											return (
-												<option key={campaign.name} value={campaign.name}>
-													{campaign.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Location: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.location}
-									onChange={this.onChangeLocation}
-								>
-									{this.state.locations
-										.filter(location => location.world === this.state.world)
-										.filter(location => location.campaign === this.state.campaign)
-										.map(location => {
-											return (
-												<option key={location.name} value={location.name}>
-													{location.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Factions: </label>
-								<input
-									type="number"
-									className="form-control"
-									value={this.state.factions}
-									onChange={this.onChangeFactions}
-								/>
-							</div>
-							<div className="form-group">
-								<input type="submit" value="Create Encounter" className="btn btn-primary" />
-							</div>
-						</form>
-					</div>
-					<div>
-						<form onSubmit={this.onSubmit}>
-							<h3>loot</h3>
-							<div className="form-group">
-								<label>Name: </label>
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.name}
-									onChange={this.onChangeName}
-								/>
-							</div>
-							<div className="form-group">
-								<label>World: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.world}
-									onChange={this.onChangeWorld}
-								>
-									{this.state.worlds.map(world => {
-										return (
-											<option key={world} value={world}>
-												{world}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Campaign: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.campaign}
-									onChange={this.onChangeCampaign}
-								>
-									{this.state.campaigns
-										.filter(campaign => campaign.world === this.state.world)
-										.map(campaign => {
-											return (
-												<option key={campaign.name} value={campaign.name}>
-													{campaign.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Location: </label>
-								<select
-									ref="userInput"
-									required
-									className="form-control"
-									value={this.state.location}
-									onChange={this.onChangeLocation}
-								>
-									{this.state.locations
-										.filter(location => location.world === this.state.world)
-										.filter(location => location.campaign === this.state.campaign)
-										.map(location => {
-											return (
-												<option key={location.name} value={location.name}>
-													{location.name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
-							<div className="form-group">
-								<label>Factions: </label>
-								<input
-									type="number"
-									className="form-control"
-									value={this.state.factions}
-									onChange={this.onChangeFactions}
-								/>
-							</div>
-							<div className="form-group">
-								<input type="submit" value="Create Encounter" className="btn btn-primary" />
-							</div>
-						</form>
-					</div>
-					<div>next to</div>
-					<div>this other thing</div>
-					<div>
-						add monster, add PC, add NPC, World, campaign, Location, loot | now i am just trying to fill up
-						space so I can see if this acutally fills up the dive that I think it is filling up
-					</div>
-					<Encounters />
-				</div>
+				<FactionData
+					details={this.state}
+					dothisthing={this.dothisthing}
+					toggle={this.toggle}
+					deleteElement={this.deleteElement}
+				></FactionData>
+				<EncounterData
+					details={this.state}
+					dothisthing={this.dothisthing}
+					toggle={this.toggle}
+					deleteElement={this.deleteElement}
+				></EncounterData>
+				<FactionData
+					details={this.state}
+					dothisthing={this.dothisthing}
+					toggle={this.toggle}
+					deleteElement={this.deleteElement}
+				></FactionData>
+				<br />
+				<DataPickers></DataPickers>
+				<DataPickers></DataPickers>
+				<DataPickers></DataPickers>
 			</div>
 		);
 	}
