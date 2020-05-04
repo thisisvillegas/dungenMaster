@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"main": "index.js",
+	"homepage": "http://thisisvillegas.com/dma",
 	"dependencies": {
 		"@material-ui/core": "^4.9.7",
 		"@material-ui/icons": "^4.9.1",
