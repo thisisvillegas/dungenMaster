@@ -190,7 +190,7 @@ const DataPickers = props => {
 	);
 };
 
-export default class CreateEncounter extends Component {
+export default class ViewEncounter extends Component {
 	state = {
 		name: '',
 		world: '',

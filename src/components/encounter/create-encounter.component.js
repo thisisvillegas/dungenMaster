@@ -2,104 +2,132 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default class CreateEncounter extends Component {
-	constructor(props) {
-		super(props);
-		this.onChangeName = this.onChangeName.bind(this);
-		this.onChangeCampaign = this.onChangeCampaign.bind(this);
-		this.onChangeWorld = this.onChangeWorld.bind(this);
-		this.onChangeLocation = this.onChangeLocation.bind(this);
-		this.onChangeFactions = this.onChangeFactions.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+const SaveButton = props => {
+	let { toggle, modal, onSubmit, state } = props;
+	// console.log('peropp', props);
 
-		this.state = {
-			name: '',
-			world: '',
-			worlds: [],
-			campaign: '',
-			campaigns: [],
-			location: '',
-			locations: [],
-			factions: 0,
-		};
-	}
+	return !modal ? (
+		<input
+			type="submit"
+			value="Create Encounter"
+			className="btn btn-primary"
+			onClick={() => {
+				onSubmit(props.state);
+				toggle();
+			}}
+		/>
+	) : (
+		<p>Huzzah! Enconter Initiated, Move to the Next Screen </p>
+	);
+};
+
+export default class CreateEncounter extends Component {
+	state = {
+		name: '',
+		world: '',
+		worlds: [],
+		campaign: '',
+		campaigns: [],
+		location: '',
+		locations: [],
+		factions: 0,
+		modal: false,
+		playerCharacters: [],
+		monsters: [],
+		npc: [],
+	};
 
 	componentDidMount() {
-		axios.get('http://localhost:5001/worlds/').then(res => {
+		axios.get(`${process.env.REACT_APP_LOCAL_DB}/worlds/`).then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					worlds: res.data.map(world => world.name),
-					world: res.data[0].name,
+					// world: res.data[0].name,
 				});
 			}
 		});
 
-		axios.get('http://localhost:5001/campaigns/').then(res => {
+		axios.get(`${process.env.REACT_APP_LOCAL_DB}/campaigns/`).then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					campaigns: res.data.map(campaign => {
 						return { name: campaign.name, world: campaign.world };
 					}),
-					campaign: res.data[0].name,
+					// campaign: res.data[0].name,
 				});
 			}
 		});
 
-		axios.get('http://localhost:5001/locations/').then(res => {
+		axios.get(`${process.env.REACT_APP_LOCAL_DB}/locations/`).then(res => {
 			if (res.data.length > 0) {
 				this.setState({
 					locations: res.data.map(location => {
+						// console.log('location.name', location.name);
 						return { name: location.name, world: location.world, campaign: location.campaign };
 					}),
-					location: res.data[0].name,
+					// location: res.data[0].name,
 				});
 			}
 		});
 	}
-	onChangeName(e) {
+	onChangeName = e => {
 		this.setState({
 			name: e.target.value,
 		});
-	}
-	onChangeWorld(e) {
+	};
+	onChangeWorld = e => {
 		this.setState({
 			world: e.target.value,
 		});
-	}
-	onChangeCampaign(e) {
+	};
+	onChangeCampaign = e => {
 		this.setState({
 			campaign: e.target.value,
 		});
-	}
-	onChangeLocation(e) {
+	};
+	onChangeLocation = e => {
 		this.setState({
 			location: e.target.value,
 		});
-	}
-	onChangeFactions(e) {
+	};
+	onChangeFactions = e => {
 		this.setState({
 			factions: e.target.value,
 		});
-	}
-	onSubmit(e) {
-		e.preventDefault();
-		const encounter = {
-			name: this.state.name,
-			world: this.state.world,
-			campaign: this.state.campaign,
-			location: this.state.location,
-			factions: this.state.factions,
-		};
+	};
+	onChangePlayerCharacters = e => {
+		this.setState({
+			playerCharacters: e.target.value,
+		});
+	};
+	onChangeMonsters = e => {
+		this.setState({
+			monsters: e.target.value,
+		});
+	};
+	onChangeNPC = e => {
+		this.setState({
+			npc: e.target.value,
+		});
+	};
 
+	toggle = () => {
+		// console.log('this.state.modal', this.state.modal);
+		this.setState({
+			modal: !this.state.modal,
+		});
+	};
+
+	onSubmit = e => {
+		const encounter = { ...e };
 		console.log(encounter);
-
-		axios.post('http://localhost:5001/encounters/add', encounter).then(res => console.log(res.data));
-
-		window.location = '/encounters';
-	}
+		// window.activeEncounter = encounter;
+		axios.post(`${process.env.REACT_APP_LOCAL_DB}/encounters/add`, encounter).then(res => console.log(res.data));
+	};
 	render() {
 		return (
 			<div>
+				{/* {console.log('this.state', this.state)} */}
 				<h3>Create New Encounter</h3>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
@@ -120,6 +148,7 @@ export default class CreateEncounter extends Component {
 							value={this.state.world}
 							onChange={this.onChangeWorld}
 						>
+							<option> -- </option>
 							{this.state.worlds.map(world => {
 								return (
 									<option key={world} value={world}>
@@ -141,6 +170,7 @@ export default class CreateEncounter extends Component {
 							value={this.state.campaign}
 							onChange={this.onChangeCampaign}
 						>
+							<option> -- </option>
 							{this.state.campaigns
 								.filter(campaign => campaign.world === this.state.world)
 								.map(campaign => {
@@ -161,6 +191,7 @@ export default class CreateEncounter extends Component {
 							value={this.state.location}
 							onChange={this.onChangeLocation}
 						>
+							<option> -- </option>
 							{this.state.locations
 								.filter(location => location.world === this.state.world)
 								.filter(location => location.campaign === this.state.campaign)
@@ -183,7 +214,18 @@ export default class CreateEncounter extends Component {
 						/>
 					</div>
 					<div className="form-group">
-						<input type="submit" value="Create Encounter" className="btn btn-primary" />
+						<SaveButton
+							modal={this.state.modal}
+							toggle={this.toggle}
+							onSubmit={this.onSubmit}
+							state={this.state}
+						/>
+						{/* <input
+							type="submit"
+							value="Create Encounter"
+							className="btn btn-primary"
+							onClick={this.toggle}
+						/> */}
 					</div>
 				</form>
 			</div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Tree from './Tree';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import NavBar from '../components/navbar.component';
 import CreateWorlds from '../../world/create-world.component';
 import CreateCampaign from '../../campaign/create-campaign.component';
@@ -13,6 +14,9 @@ import CreateMonster from '../../monster/create-monster.component';
 import Splash from '../../splash.component';
 import ObjView from '../../global/object.view.component';
 import ObjList from '../object.list.component';
+
+import ViewEncounter from '../../encounter/encounter.add.actor.component';
+import EncounterStepper from '../../encounter/encounter.stepper.component';
 
 const StyledFileExplorer = styled.div`
 	width: 1440px;
@@ -60,8 +64,9 @@ export default class FileExplorer extends Component {
 						<Route path="/view/:id" exact component={ObjView} />
 						<Route path="/list/:type" exact component={ObjList} />
 
-						<Route path="/encounterbuilder" exact component={EncounterBuilder} />
+						<Route path="/encounterbuilder" exact component={EncounterStepper} />
 					</div>
+
 					{/* <div>stuff</div> */}
 				</StyledFileExplorer>
 			</div>

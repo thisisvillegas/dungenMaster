@@ -1,0 +1,192 @@
+[
+	{
+		"_id": "5e928363c6b1711d32952d95",
+		"name": "Forest1",
+		"type": "locations",
+		"node": {
+			"/root/Fantasia/Chop dem trees/Forest1": {
+				"path": "/root/Fantasia/Chop dem trees/Forest1",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Fantasia",
+		"campaign": "Chop dem trees",
+		"factions": 0,
+		"createdAt": "2020-04-12T02:56:35.349Z",
+		"updatedAt": "2020-04-12T02:56:35.349Z",
+		"__v": 0
+	},
+	{
+		"_id": "5e949db8c6b1711d32952d9c",
+		"name": "Basement",
+		"type": "locations",
+		"node": {
+			"/root/Fantasia/Make Brooms Dance/Basement": {
+				"path": "/root/Fantasia/Make Brooms Dance/Basement",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Fantasia",
+		"campaign": "Make Brooms Dance",
+		"factions": 55,
+		"createdAt": "2020-04-13T17:13:28.999Z",
+		"updatedAt": "2020-04-28T22:34:13.967Z",
+		"__v": 0
+	},
+	{
+		"_id": "5e94b6f6c6b1711d32952da2",
+		"name": "NitrogenLake1",
+		"type": "locations",
+		"node": {
+			"/root/Kerbin/Get to Dres/NitrogenLake1": {
+				"path": "/root/Kerbin/Get to Dres/NitrogenLake1",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Kerbin",
+		"campaign": "Get to Dres",
+		"factions": 55,
+		"createdAt": "2020-04-13T19:01:10.692Z",
+		"updatedAt": "2020-04-28T22:41:11.088Z",
+		"__v": 0
+	},
+	{
+		"_id": "5e94bd19c6b1711d32952da3",
+		"name": "South Crater",
+		"type": "locations",
+		"node": {
+			"/root/Kerbin/Get to the moon/South Crater": {
+				"path": "/root/Kerbin/Get to the moon/South Crater",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Kerbin",
+		"campaign": "Get to the moon",
+		"factions": 0,
+		"createdAt": "2020-04-13T19:27:21.875Z",
+		"updatedAt": "2020-04-13T19:27:21.875Z",
+		"__v": 0
+	},
+	{
+		"_id": "5e94cd9cc6b1711d32952daf",
+		"name": "Lake 1",
+		"type": "locations",
+		"node": {
+			"/root/Kerbin/Get to Dres/Lake 1": {
+				"path": "/root/Kerbin/Get to Dres/Lake 1",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Kerbin",
+		"campaign": "Get to Dres",
+		"factions": 0,
+		"createdAt": "2020-04-13T20:37:48.317Z",
+		"updatedAt": "2020-04-13T20:37:48.317Z",
+		"__v": 0
+	},
+	{
+		"_id": "5e9c97d9af1dc307dbe1e741",
+		"name": "Nordic Island",
+		"type": "locations",
+		"node": {
+			"/root/Monster/Flying/Nordic Island": {
+				"path": "/root/Monster/Flying/Nordic Island",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Monster",
+		"campaign": "Flying",
+		"factions": 100,
+		"createdAt": "2020-04-19T18:26:33.654Z",
+		"updatedAt": "2020-04-19T18:26:33.654Z",
+		"__v": 0
+	},
+	{
+		"_id": "5ea4cedc1f303c217b2907b4",
+		"name": "Ericas House",
+		"type": "locations",
+		"node": {
+			"/root/Kerbin/Get to Dres/Ericas House": {
+				"path": "/root/Kerbin/Get to Dres/Ericas House",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Kerbin",
+		"campaign": "Get to Dres",
+		"factions": 4400,
+		"createdAt": "2020-04-25T23:59:24.938Z",
+		"updatedAt": "2020-04-25T23:59:24.938Z",
+		"__v": 0
+	},
+	{
+		"_id": "5ea8b8de6b41ad45c53a480c",
+		"name": "RhinoLand",
+		"type": "locations",
+		"node": {
+			"/root/Rhino/Rhino Camp1/RhinoLand": {
+				"path": "/root/Rhino/Rhino Camp1/RhinoLand",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Rhino",
+		"campaign": "Rhino Camp1",
+		"factions": 22,
+		"createdAt": "2020-04-28T23:14:38.796Z",
+		"updatedAt": "2020-04-28T23:14:38.796Z",
+		"__v": 0
+	},
+	{
+		"_id": "5eabc48c92b8663a26b16fd4",
+		"name": "Austin",
+		"type": "locations",
+		"node": {
+			"/root/Galaga/Top Score/Austin": {
+				"path": "/root/Galaga/Top Score/Austin",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Galaga",
+		"campaign": "Top Score",
+		"factions": 777,
+		"createdAt": "2020-05-01T06:41:16.029Z",
+		"updatedAt": "2020-05-01T06:41:16.029Z",
+		"__v": 0
+	},
+	{
+		"_id": "5eac574592b8663a26b16fd5",
+		"name": "Austin",
+		"type": "locations",
+		"node": {
+			"/root/Earth/Simulate Reality/Austin": {
+				"path": "/root/Earth/Simulate Reality/Austin",
+				"type": "folder",
+				"category": "locations",
+				"children": []
+			}
+		},
+		"world": "Earth",
+		"campaign": "Simulate Reality",
+		"factions": 1000,
+		"createdAt": "2020-05-01T17:07:17.775Z",
+		"updatedAt": "2020-05-01T17:07:17.775Z",
+		"__v": 0
+	}
+]

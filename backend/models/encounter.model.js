@@ -14,7 +14,7 @@ const encounterSchema = new Schema(
 		},
 		node: {
 			type: Object,
-			required: true,
+			required: false,
 		},
 		world: {
 			type: String,
@@ -29,8 +29,20 @@ const encounterSchema = new Schema(
 			required: true,
 		},
 		factions: {
-			type: Number,
-			required: true,
+			type: String,
+			required: false,
+		},
+		playerCharacters: {
+			type: Array,
+			required: false,
+		},
+		npc: {
+			type: Array,
+			required: false,
+		},
+		monsters: {
+			type: Array,
+			required: false,
 		},
 	},
 	{
