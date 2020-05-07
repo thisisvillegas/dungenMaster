@@ -16,7 +16,7 @@
 		"cra-template": "1.0.2",
 		"dotenv": "^8.2.0",
 		"immutability-helper": "^3.0.2",
-		"jquery": "^3.4.1",
+		"jquery": "^3.5.0",
 		"mdbreact": "^4.25.6",
 		"moment": "^2.25.3",
 		"momentjs": "^2.0.0",
