@@ -205,15 +205,6 @@ export default class CreateEncounter extends Component {
 						</select>
 					</div>
 					<div className="form-group">
-						<label>Factions: </label>
-						<input
-							type="number"
-							className="form-control"
-							value={this.state.factions}
-							onChange={this.onChangeFactions}
-						/>
-					</div>
-					<div className="form-group">
 						<SaveButton
 							modal={this.state.modal}
 							toggle={this.toggle}
