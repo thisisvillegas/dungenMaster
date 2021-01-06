@@ -11,7 +11,7 @@
 		"@mui-treasury/components": "^1.0.2",
 		"@mui-treasury/styles": "^1.1.1",
 		"@naisutech/react-tree": "^0.1.7",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"bootstrap": "^4.4.1",
 		"cra-template": "1.0.2",
 		"dotenv": "^8.2.0",
